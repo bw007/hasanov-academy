@@ -3,7 +3,7 @@ export enum NavItems {
   Courses = 'kurslar',
   Blog = 'blog',
   Contact = 'aloqa',
-  Signin = 'kirish',
+  SignIn = 'kirish',
   Profile = 'profil',
-  Logout = 'chiqish'
+  SignOut = 'chiqish'
 }
