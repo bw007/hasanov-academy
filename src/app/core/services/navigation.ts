@@ -36,9 +36,9 @@ export class Navigation {
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
     {
-      label: NavItems.Signin,
+      label: NavItems.SignIn,
       icon: PrimeIcons.SIGN_IN,
-      routerLink: "/auth",
+      routerLink: "/auth/sign-in",
       styleClass: "nav-sign-in",
       categories: [NavigationCategory.TopSecondary, NavigationCategory.BottomPrimary],
     },
@@ -49,9 +49,9 @@ export class Navigation {
       categories: [NavigationCategory.TopSecondary, NavigationCategory.BottomPrimary],
     },
     {
-      label: NavItems.Logout,
+      label: NavItems.SignOut,
       icon: PrimeIcons.SIGN_OUT,
-      routerLink: "/logout",
+      routerLink: "/auth/sign-out",
       styleClass: "nav-sign-out",
       categories: [NavigationCategory.TopSecondary],
     }
@@ -65,7 +65,7 @@ export class Navigation {
     );
     
     return this.isAuthenticated()
-      ? filtered.filter(item => item.label !== NavItems.Signin)
+      ? filtered.filter(item => item.label !== NavItems.SignIn)
       : filtered.filter(item => item.label !== NavItems.Profile);
   };
 
