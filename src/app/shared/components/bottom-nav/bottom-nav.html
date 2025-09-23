@@ -1,0 +1,14 @@
+<p-toolbar class="bottom-nav">
+  @if (view() !== 'desktop') {
+    @for (item of mobileNavs(); track item.label) {
+    <p-button
+      variant="text"
+      plain
+      [class]="item.styleClass"
+      [routerLink]="item.routerLink"
+      routerLinkActive="active"
+      [icon]="item.icon"
+    />
+    }
+  }
+</p-toolbar>
