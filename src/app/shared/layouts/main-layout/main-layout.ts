@@ -1,19 +1,35 @@
-import { Component, inject, OnInit } from "@angular/core";
-import { ResponsiveService } from "../../../core/services/responsive";
+import { Component, computed, inject } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { View } from "@core/enums";
 
-import { Header } from "../../components/header/header";
+import { Navigation, Responsive } from "@core/services";
+import { BottomNav, Header } from "@shared/components";
 
 @Component({
   selector: "app-main-layout",
   templateUrl: "./main-layout.html",
-  imports: [Header]
+  imports: [Header, BottomNav, RouterOutlet]
 })
-export class MainLayout implements OnInit {
-  private responsiveService = inject(ResponsiveService);
+export class MainLayout {
+  private responsive = inject(Responsive);
+  private navigation = inject(Navigation);
 
-  ngOnInit(): void {
-    this.responsiveService.isWeb$.subscribe(result => {
-      console.log(result.matches);
-    });    
-  }
+  currentView = computed(() => {
+    if (this.responsive.isMobile()) return View.Mobile;
+    if (this.responsive.isTablet()) return View.Tablet;
+    return View.Desktop;
+  });
+
+  getNavsTopSecondary = computed(() => this.navigation.getTopSecondaryItems());
+
+  getNavsCurrentBreakpoint = computed(() => {
+    const view = this.currentView();
+
+    switch (view) {
+      case View.Desktop:
+        return this.navigation.getTopPrimaryItems();
+      default:
+        return this.navigation.getBottomNavItems();        
+    }
+  });
 }
