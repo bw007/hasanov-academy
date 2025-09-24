@@ -1,4 +1,4 @@
-import { Component, computed, input } from "@angular/core";
+import { Component, computed, input, ViewEncapsulation } from "@angular/core";
 import { ToolbarModule } from "primeng/toolbar";
 import { ButtonModule } from "primeng/button";
 import { AvatarModule } from "primeng/avatar";
@@ -19,6 +19,7 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
     RouterLinkActive,
     SpeedDialModule,
   ],
+  encapsulation: ViewEncapsulation.None
 })
 export class BottomNav {
   readonly currentNavs = input<MenuItem[]>();
