@@ -1,4 +1,4 @@
-::ng-deep .bottom-nav {
+.bottom-nav {
   padding: 0 !important;
   height: 100% !important;
   border-radius: 0 !important;
@@ -8,31 +8,31 @@
   box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.1) !important;
 }
 
-::ng-deep .bottom-nav p-button[variant="text"] {
+.bottom-nav p-button[variant="text"] {
   height: 100% !important;
   display: flex !important; 
   align-items: center !important;
   justify-content: center !important;
 }
 
-::ng-deep .bottom-nav p-button[variant="text"] .p-button {
+.bottom-nav p-button[variant="text"] .p-button {
   width: 100% !important;
   height: 100% !important;
 }
 
-::ng-deep .nav-home .p-button .p-button-icon {
+.nav-home .p-button .p-button-icon {
   font-size: 22px;
   color: var(--p-orange-400);
 }
 
-::ng-deep .nav-sign-in .p-button .p-button-icon {
+.nav-sign-in .p-button .p-button-icon {
   color: var(--p-orange-400);
 }
 
-:host-context(.app-dark) ::ng-deep .bottom-nav .active .p-button {
+:host-context(.app-dark) .bottom-nav .active .p-button {
   background-color: var(--p-surface-800) !important;
 }
 
-:host-context(html:not(.app-dark)) ::ng-deep .bottom-nav .active .p-button {
+:host-context(html:not(.app-dark)) .bottom-nav .active .p-button {
   background-color: var(--p-surface-100) !important;
 }
