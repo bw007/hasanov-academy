@@ -13,5 +13,5 @@ body {
 }
 
 .p-component {
-  font-family: var(--font-family);
+  font-family: var(--font-family) !important;
 }
