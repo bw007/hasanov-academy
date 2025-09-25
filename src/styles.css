@@ -14,4 +14,15 @@ body {
 
 .p-component {
   font-family: var(--font-family) !important;
+  --p-inputtext-focus-border-color: var(--p-slate-500);
+}
+
+[formgroupname].ng-invalid.ng-touched.ng-dirty label,
+.control:has(.ng-invalid.ng-touched.ng-dirty) label {
+  color: var(--p-red-500);
+}
+
+[formgroupname].ng-invalid.ng-touched.ng-dirty input,
+input.ng-invalid.ng-touched.ng-dirty {
+  border-color: var(--p-red-500);
 }
