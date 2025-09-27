@@ -1,0 +1,101 @@
+<app-form-card>
+  <span ngProjectAs="header" class="text-xl sm:text-2xl">Tizimga kirish</span>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="signIn($event)"
+    ngProjectAs="main"
+    action=""
+    class="space-y-5 sm:space-y-6 mt-4 sm:mt-6"
+  >
+    <div class="flex flex-col gap-2 relative">
+      <label for="email" [class.p-invalid-color]="emailErrors" class="leading-2.5 text-sm font-normal">E-pochta</label>
+      <input
+        #formInput
+        autocomplete="off"
+        pSize="small"
+        type="email"
+        pInputText
+        id="email"
+        placeholder="kimdir@pochta.uz"
+        name="email"
+        [formControl]="form.controls.email"
+        required
+      />
+      @if (emailErrors) {
+        <p-message
+          size="small"
+          class="absolute -bottom-5 right-0"
+          severity="error"
+          size="small"
+          variant="simple"
+        >
+          {{emailErrors}}
+        </p-message>
+      }
+    </div>
+    <div class="flex flex-col gap-2 relative">
+      <label for="password" [class.p-invalid-color]="passwordErrors" class="leading-2.5 text-sm font-normal">Kalit</label>
+      <p-password
+        [formControl]="form.controls.password"
+        size="small"
+        inputId="password"
+        name="password"
+        fluid
+        [toggleMask]="true"
+        [feedback]="false"
+        placeholder="*-*-*-*-*-*-*-*"
+      />
+      @if (passwordErrors) {
+      <p-message
+        size="small"
+        class="absolute -bottom-5 right-0"
+        severity="error"
+        size="small"
+        variant="simple"
+      >
+        {{passwordErrors}}
+      </p-message>
+      }
+    </div>
+    <div class="flex items-center justify-between m-0 my-2">
+      <div class="flex items-center">
+        <p-checkbox [binary]="true" size="small" inputId="remember" />
+        <label for="remember" class="leading-1 text-sm font-normal ml-1.5">Eslab qoling</label>
+      </div>
+      <p class="text-end font-normal text-sm text-gray-600">
+        <a class="ml-0.5 text-blue-400 hover:underline" routerLink="/auth/forgot-password">
+          Kalitni tiklash
+        </a>
+      </p>
+    </div>
+    <button
+      pButton
+      severity="warn"
+      size="small"
+      type="submit"
+      label="Kirish"
+      fluid
+      class="mt-1.5"
+      [disabled]="isOAuthLoading()"
+      [loading]="isLocalLoading()"
+    ></button>
+  </form>
+  <p-divider class="sm:!my-5">Yoki</p-divider>
+  <p-button
+    variant="outlined"
+    severity="warn"
+    size="small"
+    icon="pi pi-google"
+    label="Google bilan"
+    (onClick)="signIn($event)"
+    [loading]="isOAuthLoading()"
+    [disabled]="isLocalLoading()"
+    fluid
+  ></p-button>
+  <p class="text-center mt-3 font-normal text-sm text-gray-600">
+    <span>Hisobingiz yo'qmi?</span>
+    <a class="ml-0.5 text-blue-400 hover:underline" routerLink="/auth/sign-up">
+      Ro'yxatdan o'tish
+    </a>
+  </p>
+</app-form-card>
