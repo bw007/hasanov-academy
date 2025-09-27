@@ -1,0 +1,180 @@
+<app-form-card class="test">
+  <span ngProjectAs="header" class="text-2xl">Ro'yxatdan o'tish</span>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="signUp($event)"
+    ngProjectAs="main"
+    action=""
+    class="space-y-6 mt-6 w-lg"
+  >
+    <div class="flex flex-col gap-y-6">
+      <div class="flex justify-between gap-4">
+        <div class="flex flex-col flex-1 gap-2 relative">
+          <label for="name" [class.p-invalid-color]="nameErrors" class="leading-2.5 text-sm font-normal">Ism</label>
+          <input
+            #formInput
+            autocomplete="off"
+            pSize="small"
+            pInputText
+            id="name"
+            placeholder="Ismingiz..."
+            name="name"
+            [autofocus]="true"
+            [formControl]="form.controls.name"
+          />
+          @if (nameErrors) {
+          <p-message
+            size="small"
+            class="absolute -bottom-5 right-0"
+            severity="error"
+            size="small"
+            variant="simple"
+          >
+            {{nameErrors}}
+          </p-message>          }
+        </div>
+        <div class="flex flex-col flex-1 gap-2 relative">
+          <label for="email" [class.p-invalid-color]="emailErrors" class="leading-2.5 text-sm font-normal">E-pochta</label>
+          <input
+            #formInput
+            pSize="small"
+            type="email"
+            autocomplete="off"
+            pInputText
+            id="email"
+            placeholder="kimdir@pochta.uz"
+            name="email"
+            [class.opacity-50]="loadingState().loading"
+            [readonly]="loadingState().loading"
+            [formControl]="form.controls.email"
+            required
+          />
+          @if (emailChecking) {
+          <p-message
+            size="small"
+            class="absolute -bottom-5 right-0"
+            severity="info"
+            size="small"
+            variant="simple"
+          >
+            <i class="pi pi-spin pi-spinner mr-px !text-xs leading-none"></i>
+            Tekshirilmoda...
+          </p-message>
+          }
+          @if (emailUnique) {
+            <p-message
+              size="small"
+              class="absolute -bottom-5 right-0"
+              severity="success"
+              size="small"
+              variant="simple"
+            >
+              Ishlatish mumkin
+            </p-message>
+          }
+          @if (emailErrors) {
+          <p-message
+            size="small"
+            class="absolute -bottom-5 right-0"
+            severity="error"
+            size="small"
+            variant="simple"
+          >
+            {{emailErrors}}
+          </p-message>
+          }
+        </div>
+      </div>
+      <div class="flex justify-between gap-4" formGroupName="passwords">
+        <div class="flex flex-col flex-1 gap-2 relative">
+          <label for="password" [class.p-invalid-color]="passwordErrors" class="leading-2.5 text-sm font-normal">Maxfiy kalit</label>
+          <p-password
+            [formControl]="form.controls.passwords.controls.password"
+            autocomplete="off"
+            size="small"
+            inputId="password"
+            name="password"
+            fluid
+            [toggleMask]="true"
+            placeholder="*-*-*-*-*-*-*-*"
+            promptLabel="Kuchli kalit o'ylang"
+            weakLabel="Zaif"
+            mediumLabel="O'rtacha"
+            strongLabel="Kuchli"
+          >
+            <ng-template #footer>
+              <p-divider />
+              <ul class="pl-2 text-xs my-0 leading-normal">
+                <li [class.text-green-500]="hasUppercase()">Kamida 1 ta katta harf</li>
+                <li [class.text-green-500]="hasLowercase()">Kamida 1 ta kichik harf</li>
+                <li [class.text-green-500]="hasNumeric()">Kamida 1 ta katta raqam</li>
+                <li [class.text-green-500]="hasMinLength()">Kamida 8 ta belgi</li>
+              </ul>
+            </ng-template>
+          </p-password>
+          @if (passwordErrors) {
+          <p-message
+            size="small"
+            class="absolute -bottom-5 right-0"
+            severity="error"
+            size="small"
+            variant="simple"
+          >
+            {{passwordErrors}}
+          </p-message>
+          }
+        </div>
+        <div class="flex flex-col flex-1 gap-2 relative">
+          <label for="confirmPassword" [class.p-invalid-color]="confirmPasswordErrors" class="leading-2.5 text-sm font-normal">Kalitni takrorlang</label>
+          <p-password
+            [formControl]="form.controls.passwords.controls.confirmPassword"
+            size="small"
+            inputId="confirmPassword"
+            name="confirmPassword"
+            fluid
+            [toggleMask]="true"
+            [feedback]="false"
+            placeholder="*-*-*-*-*-*-*-*"
+          />
+          @if (confirmPasswordErrors) {
+          <p-message
+            size="small"
+            class="absolute -bottom-5 right-0"
+            severity="error"
+            size="small"
+            variant="simple"
+          >
+            {{confirmPasswordErrors}}
+          </p-message>          }
+        </div>
+      </div>
+    </div>
+    <button
+      pButton
+      severity="warn"
+      size="small"
+      type="submit"
+      label="Ro'yxatdan o'tish"
+      fluid
+      class="mt-1.5"
+      [disabled]="isOAuthLoading() || emailChecking"
+      [loading]="isLocalLoading()"
+    ></button>
+  </form>
+  <p-divider class="!my-5">Yoki</p-divider>
+  <p-button
+    variant="outlined"
+    severity="warn"
+    size="small"
+    icon="pi pi-google"
+    label="Google bilan"
+    (onClick)="signUp($event)"
+    [loading]="isOAuthLoading()"
+    [disabled]="isLocalLoading()"
+    fluid
+  ></p-button>
+  <p class="text-center mt-3 font-normal text-sm text-gray-600">
+    <span>Hisobingiz bormi?</span>
+    <a class="ml-1 text-blue-400 hover:underline" routerLink="/auth/sign-in">Kirish</a>
+  </p>
+</app-form-card>
