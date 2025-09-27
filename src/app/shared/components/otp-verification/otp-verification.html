@@ -1,0 +1,44 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="flex flex-col gap-2 mt-4"
+>
+  <div class="relative pb-6">
+    <p-inputotp
+      [length]="6"
+      size="large"
+      class="!justify-between"
+      formControlName="code"
+      [autofocus]="true"
+      variant="filled"
+      [invalid]="isInvalid()"
+    />
+    @if (isInvalid()) {
+    <p-message
+      size="small"
+      styleClass="absolute bottom-0 left-0"
+      severity="error"
+      variant="simple"
+    >
+      {{codeErrors || verifyError}}
+    </p-message>
+    }
+  </div>
+  <p-button
+    fluid
+    [loading]="verify() === 'pending'"
+    severity="warn"
+    type="submit"
+    label="Tasdiqlash"
+    [disabled]="form.invalid"
+  />
+  <p class="text-center mt-1.5 font-normal text-sm text-gray-600">
+    @if (isResend()) {
+    <i class="pi pi-spin pi-spinner text-blue-400 !text-xs leading-none"></i>
+    } @else {
+    <a class="ml-0.5 text-blue-400 hover:underline cursor-pointer" (click)="onResendCode()">
+      Qayta yuborish
+    </a>
+    }
+  </p>
+</form>
