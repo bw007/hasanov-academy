@@ -17,12 +17,11 @@ body {
   --p-inputtext-focus-border-color: var(--p-slate-500);
 }
 
-[formgroupname].ng-invalid.ng-touched.ng-dirty label,
-.control:has(.ng-invalid.ng-touched.ng-dirty) label {
-  color: var(--p-red-500);
+.p-invalid-color {
+  color: var(--p-inputtext-invalid-placeholder-color);
 }
 
-[formgroupname].ng-invalid.ng-touched.ng-dirty input,
-input.ng-invalid.ng-touched.ng-dirty {
-  border-color: var(--p-red-500);
+form .p-message-text {
+  font-size: 12px !important;
+  font-weight: normal !important;
 }
