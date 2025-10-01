@@ -1,0 +1,14 @@
+<div class="flex flex-col gap-3">
+  @for (item of faqs(); track $index) {
+  <p-panel [toggleable]="true" toggler="header" [collapsed]="true">
+    <ng-template pTemplate="header">
+      <div class="flex items-center gap-2">
+        <span class="font-bold">{{item.question}}</span>
+      </div>
+    </ng-template>
+    <p class="">
+      {{item.question}}
+    </p>
+  </p-panel>
+  }
+</div>
