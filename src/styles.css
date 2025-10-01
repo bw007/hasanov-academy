@@ -3,6 +3,8 @@
 @import "primeicons/primeicons.css";
 @plugin "tailwindcss-primeui";
 
+@custom-variant dark (&:where(.app-dark, .app-dark *));
+
 :root {
   --font-family: 'Roboto', sans-serif;
   --p-font-family: var(--font-family);
@@ -24,4 +26,17 @@ body {
 form .p-message-text {
   font-size: 12px !important;
   font-weight: normal !important;
+}
+
+.p-tabs {
+  --p-tabs-tab-active-color: var(--p-orange-500);
+  --p-tabs-tab-active-background: var(--p-slate-50);
+  --p-tabs-tab-hover-color: var(--p-orange-500);
+  --p-tabs-tab-padding: 0.75rem 2rem;
+  --p-tabs-tab-active-border-color: transparent;
+  --p-tabs-active-bar-background: var(--p-orange-500);
+  --p-tabs-active-bar-height: 2px;
+}
+.app-dark .p-tabs {
+  --p-tabs-tab-active-background: var(--p-surface-800);
 }
