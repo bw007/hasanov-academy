@@ -1,0 +1,30 @@
+<div class="flex flex-col gap-3">
+  @for (item of topics(); track $index) {
+  <p-panel [toggleable]="true" toggler="header" [collapsed]="true">
+    <ng-template pTemplate="header">
+      <div class="flex items-center gap-2">
+        <span class="font-bold">{{$index + 1}}-Bo'lim. {{item.title}}</span>
+      </div>
+    </ng-template>
+    @for (lesson of item.lessons; track lesson.title) {
+      <div class="flex items-center justify-between pl-6 py-2 cursor-pointer group">
+        <div class="flex items-center gap-2 text-sm">
+          <i class="pi pi-play-circle !text-sm"></i>
+          <span class="group-hover:text-orange-500 transition-colors">{{lesson.title}}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          @if (!lesson.autenticated) {
+            <p-button size="small" [style]="{ padding: '2px 10px' }" severity="warn" outlined>Ko'rish</p-button>
+          }
+          <span class="text-xs w-12">{{lesson.duration}} min</span>
+          @if (!lesson.autenticated) {
+            <i class="pi pi-check !text-xs"></i>
+          } @else {
+            <i class="pi pi-lock !text-xs opacity-75"></i>
+          }
+        </div>
+      </div>
+    }
+  </p-panel>
+  }
+</div>
