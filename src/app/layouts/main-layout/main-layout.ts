@@ -3,7 +3,8 @@ import { RouterOutlet } from "@angular/router";
 import { View } from "@core/enums";
 
 import { Navigation, Responsive } from "@core/services/layout";
-import { BottomNav, Header } from "@shared/components";
+import { BottomNav } from "./bottom-nav/bottom-nav";
+import { Header } from "./header/header";
 
 @Component({
   selector: "app-main-layout",
