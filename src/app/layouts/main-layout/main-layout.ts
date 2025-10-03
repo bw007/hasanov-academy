@@ -2,7 +2,7 @@ import { Component, computed, inject } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { View } from "@core/enums";
 
-import { Navigation, Responsive } from "@core/services";
+import { Navigation, Responsive } from "@core/services/layout";
 import { BottomNav, Header } from "@shared/components";
 
 @Component({
