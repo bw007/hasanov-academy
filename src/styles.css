@@ -10,10 +10,101 @@
   --p-font-family: var(--font-family);
 }
 
-body {
-  font-family: var(--font-family);
+/* ===== LIGHT MODE ===== */
+:root {
+  /* Backgrounds */
+  --bg-base: #ffffff;
+  --bg-elevated: #f8f9fa;
+  --bg-overlay: #ffffff;
+  
+  /* Text */
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  
+  /* Borders */
+  --border-color: #e5e7eb;
+  --border-light: #f3f4f6;
+  
+  /* Accent */
+  --accent: #10b981;
+  --accent-hover: #059669;
 }
 
+/* ===== DARK MODE ===== */
+.app-dark {
+  /* Backgrounds */
+  --bg-base: #0d1117;
+  --bg-elevated: #161b22;
+  --bg-overlay: #1c2128;
+  
+  /* Text */
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  
+  /* Border */
+  --border-color: #30363d;
+  --border-light: #21262d;
+  
+  /* Accent */
+  --accent: #3fb950;
+  --accent-hover: #4ac55f;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Backgrounds */
+.bg-base { background-color: var(--bg-base); }
+.bg-elevated { background-color: var(--bg-elevated); }
+.bg-overlay { background-color: var(--bg-overlay); }
+
+/* Text */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+
+/* Borders */
+.border-color { border-color: var(--border-color); }
+.border-light { border-color: var(--border-light); }
+
+/* Accent */
+.text-accent { color: var(--accent); }
+.bg-accent { background-color: var(--accent); }
+.border-accent { border-color: var(--accent); }
+
+
+/* ===== COMMON PATTERNS ===== */
+
+/* Card */
+.card {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+}
+
+/* Divider */
+.divider {
+  border-color: var(--border-color);
+}
+
+/* Input base (PrimeNG) */
+.custom-input {
+  background-color: var(--bg-base);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.custom-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* PrimeNG override */
 .p-component {
   font-family: var(--font-family) !important;
   --p-inputtext-focus-border-color: var(--p-slate-500);
@@ -30,7 +121,7 @@ form .p-message-text {
 
 .p-tabs {
   --p-tabs-tab-active-color: var(--p-orange-500);
-  --p-tabs-tab-active-background: var(--p-slate-50);
+  --p-tabs-tab-active-background: var(--bg-elevated);
   --p-tabs-tab-hover-color: var(--p-orange-500);
   --p-tabs-tab-padding: 0.75rem 2rem;
   --p-tabs-tab-active-border-color: transparent;
@@ -38,5 +129,5 @@ form .p-message-text {
   --p-tabs-active-bar-height: 2px;
 }
 .app-dark .p-tabs {
-  --p-tabs-tab-active-background: var(--p-surface-800);
+  --p-tabs-tab-active-background: var(--bg-elevated);
 }
