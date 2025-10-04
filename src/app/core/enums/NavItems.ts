@@ -5,5 +5,6 @@ export enum NavItems {
   Contact = 'aloqa',
   SignIn = 'kirish',
   Profile = 'profil',
-  SignOut = 'chiqish'
+  SignOut = 'chiqish',
+  MyCourses = 'mening kurslarim'
 }
