@@ -11,7 +11,7 @@ export interface NavItem extends MenuItem {
 export class Navigation {
   private navItems = signal<NavItem[]>([
     {
-      title: "Asosiy",
+      label: "Asosiy",
       type: NavType.Home,
       icon: PrimeIcons.HOME,
       routerLink: "/home",
@@ -19,21 +19,21 @@ export class Navigation {
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
     {
-      title: "Kurslar",
+      label: "Kurslar",
       type: NavType.Courses,
       icon: PrimeIcons.TH_LARGE,
       routerLink: "/courses",
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
     {
-      title: "Blog",
+      label: "Blog",
       type: NavType.Blog,
       icon: PrimeIcons.BOOK,
       routerLink: "/blog",
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
     {
-      title: "Kirish",
+      label: "Kirish",
       type: NavType.SignIn,
       icon: PrimeIcons.SIGN_IN,
       routerLink: "/auth/sign-in",
@@ -41,21 +41,21 @@ export class Navigation {
       categories: [NavigationCategory.TopSecondary, NavigationCategory.BottomPrimary],
     },
     {
-      title: "Kurslarim",
+      label: "Kurslarim",
       type: NavType.MyCourses,
       icon: PrimeIcons.BOOK,
       routerLink: "/my-courses",
       categories: [NavigationCategory.TopSecondary],
     },
     {
-      title: "Hisobim",
+      label: "Hisobim",
       type: NavType.Profile,
       icon: PrimeIcons.USER,
       routerLink: "/profile",
       categories: [NavigationCategory.TopSecondary, NavigationCategory.BottomPrimary],
     },
     {
-      title: "Chiqish",
+      label: "Chiqish",
       type: NavType.SignOut,
       icon: PrimeIcons.SIGN_OUT,
       routerLink: "/auth/sign-out",
