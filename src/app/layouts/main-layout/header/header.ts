@@ -1,68 +1,45 @@
-import { Component, computed, DOCUMENT, inject, input, signal } from "@angular/core";
+import { Component, computed, inject, input, signal, ViewEncapsulation } from "@angular/core";
+import { NgClass } from "@angular/common";
 import { RouterLink } from "@angular/router";
-import { Menubar } from "primeng/menubar";
-import { MenuModule } from 'primeng/menu';
-import { ButtonModule } from 'primeng/button';
-import { MenuItem, PrimeIcons } from "primeng/api";
-import { AvatarModule } from "primeng/avatar"
-import { NavItems, View } from "@core/enums";
 
-enum Theme {
-  Light = 'light',
-  Dark = 'dark'
-}
+import { type MenuItem } from "primeng/api";
+import { NavItems, View } from "@core/enums";
+import { Theme } from "@core/services/layout";
+
+import { MenubarModule } from "primeng/menubar";
+import { MenuModule } from "primeng/menu";
+import { ButtonModule } from "primeng/button";
+import { AvatarModule } from "primeng/avatar";
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.html',
-  styleUrl: './header.css',
-  imports: [Menubar, ButtonModule, RouterLink, MenuModule, AvatarModule]
+  selector: "app-header",
+  templateUrl: "./header.html",
+  styleUrl: "./header.css",
+  imports: [
+    NgClass,
+    MenubarModule,
+    ButtonModule,
+    RouterLink,
+    MenuModule,
+    AvatarModule,
+    BadgeModule
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class Header {
-  private document = inject(DOCUMENT);
+  protected readonly theme = inject(Theme);
 
   readonly primaryNavs = input<MenuItem[]>();
   readonly secondaryNavs = input<MenuItem[]>();
-  readonly view = input.required<View>();
+  readonly currentView = input.required<View>();
+  protected readonly view = View;
 
-  theme = signal<Theme | ''>('');
-  userName = signal('Hasanov');
+  readonly scrollDown = input.required<boolean>();
 
-  constructor() {
-    const savedTheme = <Theme>localStorage.getItem('theme');
-
-    if (savedTheme) {
-      this.setTheme(savedTheme);
-    }
-  }
+  userName = signal("Hasanov");
 
   profileNav = computed(() =>
-    this.secondaryNavs()?.find(nav => nav.label === NavItems.Profile)
+    this.secondaryNavs()?.find((nav) => nav.label === NavItems.Profile)
   );
-  
-  themeIcon = computed(() => 
-    this.theme() === Theme.Dark ? PrimeIcons.SUN : PrimeIcons.MOON
-  );
-
-  themeLabel = computed(() =>
-    this.theme() === Theme.Dark ? 'Yorug mavzu' : 'Tungi mavzu'
-  );
-
-  setTheme(theme: Theme) {
-    const el = this.document.documentElement;
-    const darkModeSelector = "app-dark";
-
-    this.theme.set(theme);
-    localStorage.setItem('theme', this.theme());
-
-    el.classList.toggle(darkModeSelector, theme === Theme.Dark);
-  }
-
-  toggleTheme() {    
-    if (this.theme() !== Theme.Dark) {
-      this.setTheme(Theme.Dark);
-      return;
-    }
-    this.setTheme(Theme.Light);
-  }
 }
