@@ -1,67 +1,61 @@
-<div class="rounded-2xl bg-white dark:bg-surface-700 border border-gray-200 shadow-xs hover:shadow-sm transition-shadow overflow-hidden">
+<div class="rounded-2xl bg-elevated border border-color shadow-sm hover:shadow-md transition-shadow overflow-hidden">
   @if (isLoading()) {
-  <div class="bg-surface-0 dark:bg-surface-900 flex justify-between items-start gap-4 p-6">
-    <p-skeleton width="150px" height="150px" />
-    <div class="flex flex-col gap-3 flex-1">
+    <div class="bg-base flex justify-between items-start gap-4 p-6">
+      <p-skeleton width="150px" height="150px" />
+      <div class="flex flex-col gap-3 flex-1">
         <p-skeleton width="100%" />
         <p-skeleton width="75%" />
         <p-skeleton width="100%" />
         <p-skeleton width="75%" />
-    </div>
-  </div>
-  } @else {
-    <div class="flex flex-col md:flex-row overflow-hidden h-auto md:h-48">
-      <!-- Rasm qismi - Mobile: full width, Desktop: 40% -->
-    <div class="w-full md:w-2/5 h-48 md:h-full bg-gradient-to-br from-blue-100 to-purple-100 relative">
-      <img alt="Course" class="w-full h-full object-cover object-top" src="course.png" />
-      <div class="absolute top-3 left-3 bg-gray-900 text-white px-2 md:px-3 py-1 rounded-full text-xs font-medium">
-        Dizayn
       </div>
     </div>
-    
-    <!-- Content qismi - Mobile: full width, Desktop: 60% -->
-    <div class="flex flex-col justify-between w-full md:w-3/5 p-5">
-      <!-- Top section -->
-      <div class="flex flex-col gap-1.5">
-        <p class="text-xs text-gray-500 mb-1">Umar Sadullayev</p>
-        <h3 class="font-semibold text-base md:text-lg text-gray-900 leading-tight">
-          Angulardan Reactga o'tish bosqichlari
-        </h3>
-        
-        <!-- Course stats - Mobile: 2 columns, Desktop: 4 columns -->
-        <div class="grid grid-cols-2 md:flex md:flex-wrap mt-2 gap-2.5 md:gap-4 text-xs text-gray-600 mb-3">
-          <span class="flex items-center gap-1">
-            <i class="pi pi-clock text-orange-500"></i>
-            2 Hafta
-          </span>
-          <span class="flex items-center gap-1">
-            <i class="pi pi-users text-orange-500"></i>
-            156 Talaba
-          </span>
-          <span class="flex items-center gap-1">
-            <i class="pi pi-chart-bar text-orange-500"></i>
-            Boshlang'ich
-          </span>
-          <span class="flex items-center gap-1">
-            <i class="pi pi-play-circle text-orange-500"></i>
-            20 Mavzu
-          </span>
+  } @else {
+    <div class="flex flex-col md:flex-row overflow-hidden h-auto md:h-48">
+      <div class="w-full md:w-2/5 h-48 md:h-full bg-gradient-to-br from-blue-100 to-purple-100 relative">
+        <img alt="Course" class="w-full h-full object-cover object-top" src="course.png" />
+        <div class="absolute top-3 left-3 bg-gray-900 text-white px-2 md:px-3 py-1 rounded-full text-xs font-medium">
+          Dizayn
         </div>
       </div>
       
-      <!-- Bottom section -->
-      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0">
-        <div>
-          <span class="text-xl md:text-2xl font-bold text-green-600">Bepul</span>
-          <span class="text-sm text-gray-400 line-through ml-2">200.000 so'm</span>
+      <div class="flex flex-col justify-between w-full md:w-3/5 p-5">
+        <div class="flex flex-col gap-1.5">
+          <p class="text-xs text-secondary mb-1">Umar Sadullayev</p>
+          <h3 class="font-semibold text-base md:text-lg text-primary leading-tight">
+            Angulardan asoslari: To'liq qo'llanma
+          </h3>
+          <div class="grid grid-cols-2 md:flex md:flex-wrap mt-2 gap-2.5 md:gap-4 text-xs text-secondary mb-3">
+              <span class="flex items-center gap-1">
+                <i class="pi pi-clock text-orange-500"></i>
+                2 Hafta
+              </span>
+              <span class="flex items-center gap-1">
+                <i class="pi pi-users text-orange-500"></i>
+                156 Talaba
+              </span>
+              <span class="flex items-center gap-1">
+                <i class="pi pi-chart-bar text-orange-500"></i>
+                Boshlang'ich
+              </span>
+              <span class="flex items-center gap-1">
+                <i class="pi pi-play-circle text-orange-500"></i>
+                20 Mavzu
+              </span>
+         
+          </div>
         </div>
         
-        <div class="flex gap-2">
-          <p-button icon="pi pi-heart" [outlined]="true" size="small" severity="secondary" />
-          <p-button [routerLink]="['/courses', course().id]" label="Ma'lumot" size="small" />
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0">
+          <div>
+            <span class="text-xl md:text-2xl font-bold text-green-600">Bepul</span>
+            <span class="text-sm text-muted line-through ml-2">200.000 so'm</span>
+          </div>
+          <div class="flex gap-2">
+            <p-button icon="pi pi-heart" [outlined]="true" size="small" severity="secondary" />
+            <p-button [routerLink]="['/courses', course().id]" label="Ma'lumot" size="small" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
   }
 </div>
