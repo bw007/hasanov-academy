@@ -1,7 +1,6 @@
 import { computed, Injectable, signal } from "@angular/core";
 import { NavigationCategory, NavItems } from "@core/enums";
-import { MenuItem, PrimeIcons } from "primeng/api";
-
+import { type MenuItem, PrimeIcons } from "primeng/api";
 
 interface NavItem extends MenuItem {
   categories?: NavigationCategory[];
@@ -12,14 +11,14 @@ export class Navigation {
   private navItems = signal<NavItem[]>([
     {
       label: NavItems.Home,
-      icon: PrimeIcons.TH_LARGE,
+      icon: PrimeIcons.HOME,
       routerLink: "/home",
       styleClass: "nav-home",
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
     {
       label: NavItems.Courses,
-      icon: PrimeIcons.BOX,
+      icon: PrimeIcons.TH_LARGE,
       routerLink: "/courses",
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
@@ -30,17 +29,17 @@ export class Navigation {
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
     {
-      label: NavItems.Contact,
-      icon: PrimeIcons.ENVELOPE,
-      routerLink: "/contact",
-      categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
-    },
-    {
       label: NavItems.SignIn,
       icon: PrimeIcons.SIGN_IN,
       routerLink: "/auth/sign-in",
       styleClass: "nav-sign-in",
       categories: [NavigationCategory.TopSecondary, NavigationCategory.BottomPrimary],
+    },
+    {
+      label: NavItems.MyCourses,
+      icon: PrimeIcons.BOOK,
+      routerLink: "/my-courses",
+      categories: [NavigationCategory.TopSecondary],
     },
     {
       label: NavItems.Profile,
