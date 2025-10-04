@@ -1,17 +1,15 @@
-<div class="min-h-full">
+<div class="min-h-screen grid grid-rows-[auto_1fr_auto]" [ngClass]="{ 'pb-16': currentView() !== view.Desktop }">
   <app-header
     [primaryNavs]="getNavsCurrentBreakpoint()"
-    [secondaryNavs]="getNavsTopSecondary()"
-    [view]="currentView()"
+    [secondaryNavs]="navigation.getTopSecondaryItems()"
+    [currentView]="currentView()"
+    [scrollDown]="scrollDown()"
   />
-  <main class="mx-auto pb-96 max-w-7xl">
+  <main [ngClass]="{ 'mt-16 lg:mt-20': scrollDown() }">
     <router-outlet />
   </main>
-  @if (currentView() !== 'desktop') {
-    <app-bottom-nav
-      class="fixed w-full h-16 bottom-0 left-0 border-t border-gray-100/75 bg-white"
-      [currentNavs]="getNavsCurrentBreakpoint()"
-      [view]="currentView()"
-    />
+  <app-footer />
+  @if (currentView() !== view.Desktop) {
+    <app-bottom-nav [currentNavs]="getNavsCurrentBreakpoint()" />
   }
 </div>
