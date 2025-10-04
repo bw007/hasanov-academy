@@ -1,8 +1,9 @@
 import { computed, Injectable, signal } from "@angular/core";
-import { NavigationCategory, NavItems } from "@core/enums";
+import { NavigationCategory, NavType } from "@core/enums";
 import { type MenuItem, PrimeIcons } from "primeng/api";
 
-interface NavItem extends MenuItem {
+export interface NavItem extends MenuItem {
+  type?: NavType,
   categories?: NavigationCategory[];
 }
 
@@ -10,45 +11,52 @@ interface NavItem extends MenuItem {
 export class Navigation {
   private navItems = signal<NavItem[]>([
     {
-      label: NavItems.Home,
+      title: "Asosiy",
+      type: NavType.Home,
       icon: PrimeIcons.HOME,
       routerLink: "/home",
       styleClass: "nav-home",
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
     {
-      label: NavItems.Courses,
+      title: "Kurslar",
+      type: NavType.Courses,
       icon: PrimeIcons.TH_LARGE,
       routerLink: "/courses",
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
     {
-      label: NavItems.Blog,
+      title: "Blog",
+      type: NavType.Blog,
       icon: PrimeIcons.BOOK,
       routerLink: "/blog",
       categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
     },
     {
-      label: NavItems.SignIn,
+      title: "Kirish",
+      type: NavType.SignIn,
       icon: PrimeIcons.SIGN_IN,
       routerLink: "/auth/sign-in",
       styleClass: "nav-sign-in",
       categories: [NavigationCategory.TopSecondary, NavigationCategory.BottomPrimary],
     },
     {
-      label: NavItems.MyCourses,
+      title: "Kurslarim",
+      type: NavType.MyCourses,
       icon: PrimeIcons.BOOK,
       routerLink: "/my-courses",
       categories: [NavigationCategory.TopSecondary],
     },
     {
-      label: NavItems.Profile,
+      title: "Hisobim",
+      type: NavType.Profile,
       icon: PrimeIcons.USER,
       routerLink: "/profile",
       categories: [NavigationCategory.TopSecondary, NavigationCategory.BottomPrimary],
     },
     {
-      label: NavItems.SignOut,
+      title: "Chiqish",
+      type: NavType.SignOut,
       icon: PrimeIcons.SIGN_OUT,
       routerLink: "/auth/sign-out",
       styleClass: "nav-sign-out",
@@ -56,7 +64,7 @@ export class Navigation {
     }
   ]);
 
-  private isAuthenticated = signal<boolean>(false);
+  private isAuthenticated = signal<boolean>(true);
   
   private getFilteredItems(category: NavigationCategory) {
     const filtered = this.navItems().filter(item => 
@@ -64,8 +72,8 @@ export class Navigation {
     );
     
     return this.isAuthenticated()
-      ? filtered.filter(item => item.label !== NavItems.SignIn)
-      : filtered.filter(item => item.label !== NavItems.Profile);
+      ? filtered.filter(item => item.type !== NavType.SignIn)
+      : filtered.filter(item => item.type !== NavType.Profile);
   };
 
   getNavItems = this.navItems.asReadonly();
