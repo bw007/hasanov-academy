@@ -3,7 +3,8 @@ import { NgClass } from "@angular/common";
 import { RouterLink } from "@angular/router";
 
 import { type MenuItem } from "primeng/api";
-import { NavItems, View } from "@core/enums";
+import { type NavItem } from "@core/services/layout/navigation";
+import { NavType, View } from "@core/enums";
 import { Theme } from "@core/services/layout";
 
 import { MenubarModule } from "primeng/menubar";
@@ -31,7 +32,7 @@ export class Header {
   protected readonly theme = inject(Theme);
 
   readonly primaryNavs = input<MenuItem[]>();
-  readonly secondaryNavs = input<MenuItem[]>();
+  readonly secondaryNavs = input<NavItem[]>();
   readonly currentView = input.required<View>();
   protected readonly view = View;
 
@@ -40,6 +41,6 @@ export class Header {
   userName = signal("Hasanov");
 
   profileNav = computed(() =>
-    this.secondaryNavs()?.find((nav) => nav.label === NavItems.Profile)
+    this.secondaryNavs()?.find((nav) => nav.type === NavType.Profile)
   );
 }
