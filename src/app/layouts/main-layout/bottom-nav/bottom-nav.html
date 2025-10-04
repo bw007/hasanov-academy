@@ -1,14 +1,19 @@
-<p-toolbar class="bottom-nav">
-  @if (view() !== 'desktop') {
-    @for (item of mobileNavs(); track item.label) {
-    <p-button
-      variant="text"
-      plain
-      [class]="item.styleClass"
-      [routerLink]="item.routerLink"
-      routerLinkActive="active"
-      [icon]="item.icon"
-    />
-    }
-  }
-</p-toolbar>
+<div class="fixed z-30 w-full h-16 bottom-0 left-0 border-t border-color backdrop-blur-xl !bg-white/80 dark:!bg-slate-950/90">
+  <p-menubar
+    [model]="currentNavs()"
+    breakpoint="0"
+    class="bottom-nav !h-full !p-0 [&_.p-menubar-end]:!hidden !border-none !rounded-none !bg-transparent"
+  >
+    <ng-template #item let-item let-root="root">
+      <a
+        class="flex items-center flex-col !gap-1 justify-center p-menubar-item-link h-full capitalize"
+        [routerLink]="item.routerLink"
+        routerLinkActive="active"
+        [ngClass]="item.styleClass"
+      >
+        <i [ngClass]="item.icon"></i>
+        <span class="text-xs">{{ item.label }}</span>
+      </a>
+    </ng-template>
+  </p-menubar>
+</div>
