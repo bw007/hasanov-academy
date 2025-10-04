@@ -1,60 +1,75 @@
-<nav class="flex justify-between items-center gap-2 py-4 px-6 md:px-8">
-  <a routerLink="/" class="text-nowrap font-bold">Hasanov Academy</a>
+<header
+  class="transition-all duration-300"
+  [ngClass]="{
+    'fixed top-0 w-full z-50': scrollDown(),
+    '-top-20 md:-top-24': !scrollDown()
+  }"
+>
+  <div class="backdrop-blur-lg bg-white/80 dark:bg-slate-950/80" [ngClass]="scrollDown() ? 'shadow-sm' : 'shadow-xs'">
+    <nav class="top-navbar lg:container mx-auto flex justify-between items-center h-16 lg:h-20 gap-2 px-4 sm:px-6 py-4">
+      <a routerLink="/" class="text-nowrap font-bold">Hasanov Academy</a>
 
-  @if (view() === 'desktop') {
-  <p-menubar
-    [model]="primaryNavs()"
-    [breakpoint]="'820px'"
-    [style]="{ textTransform: 'capitalize', fontSize: '14px', border: 'none' }"
-    aria-label="Asosiy navigatsiya"
-  />
-  }
-
-  <div class="flex items-center gap-2">
-    <p-button
-      size="small"
-      variant="text"
-      icon="pi pi-search"
-      severity="secondary"
-      class="flex items-center justify-center"
-      aria-label="Tungi mavzu"
-    />
-    <p-button
-      size="small"
-      variant="text"
-      [icon]="themeIcon()"
-      severity="secondary"
-      class="flex items-center justify-center"
-      (onClick)="toggleTheme()"
-      [ariaLabel]="themeLabel()"
-    />
-    @if (view() === "desktop") {
-      @if (profileNav()) {
-      <div class="card flex justify-center">
-        <p-menu
-          #menu
-          [model]="secondaryNavs()"
-          styleClass="capitalize text-sm"
-          [popup]="true"
-        />
-        <p-avatar
-          (click)="menu.toggle($event)"
-          [label]="userName().slice(0, 1)"
-          class="cursor-pointer hover:opacity-85 active:opacity-100"
-        />
-      </div>
-      } @else {
-      <p-button
-        severity="warn"
-        variant="text"
-        routerLink="/auth/sign-in"
+      @if (currentView() === view.Desktop) {
+      <p-menubar
+        class="!bg-transparent"
+        [model]="primaryNavs()"
+        [breakpoint]="'820px'"
         [style]="{ textTransform: 'capitalize', fontSize: '14px', border: 'none' }"
-        aria-label="Tizimga kirish"
-      >
-        <i class="pi pi-sign-in" aria-hidden="true"></i>
-        <span class="leading-4">Kirish</span>
-      </p-button>
+        aria-label="Asosiy navigatsiya"
+      />
       }
-    }
+
+      <div class="flex items-center gap-2">
+        <p-button
+          size="small"
+          variant="text"
+          text
+          icon="pi pi-shopping-cart"
+          severity="secondary"
+          class="flex items-center justify-center relative"
+          aria-label="Tungi mavzu"
+        >
+          <p-badge value="2" severity="danger" class="absolute top-0.5 -right-0.5 scale-75" badgeSize="small" />
+        </p-button>
+        
+        <p-button
+          size="small"
+          variant="text"
+          severity="secondary"
+          class="flex items-center justify-center"
+          (onClick)="theme.toggleTheme()"
+          [icon]="theme.themeIcon()"
+          [ariaLabel]="theme.themeLabel()"
+        />
+        @if (currentView() === view.Desktop) {
+          @if (profileNav()) {
+          <div class="card flex justify-center">
+            <p-menu
+              #menu
+              [model]="secondaryNavs()"
+              styleClass="capitalize text-sm"
+              [popup]="true"
+            />
+            <p-avatar
+              (click)="menu.toggle($event)"
+              [label]="userName().slice(0, 1)"
+              class="cursor-pointer hover:opacity-85 active:opacity-100"
+            />
+          </div>
+          } @else {
+          <p-button
+            severity="warn"
+            variant="text"
+            routerLink="/auth/sign-in"
+            [style]="{ textTransform: 'capitalize', fontSize: '14px', border: 'none' }"
+            aria-label="Tizimga kirish"
+          >
+            <i class="pi pi-sign-in" aria-hidden="true"></i>
+            <span class="leading-4">Kirish</span>
+          </p-button>
+          }
+        }
+      </div>
+    </nav>
   </div>
-</nav>
+</header>
