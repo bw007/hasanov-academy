@@ -1,17 +1,21 @@
-import { Component, computed, input, ViewEncapsulation } from "@angular/core";
+import { Component, input, ViewEncapsulation } from "@angular/core";
+import { RouterLink, RouterLinkActive } from "@angular/router";
+import { NgClass } from "@angular/common";
+
 import { ToolbarModule } from "primeng/toolbar";
 import { ButtonModule } from "primeng/button";
 import { AvatarModule } from "primeng/avatar";
 import { MenuItem } from "primeng/api";
 import { SpeedDialModule } from "primeng/speeddial";
-import { NavItems, View } from "@core/enums";
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { MenubarModule } from "primeng/menubar";
 
 @Component({
   selector: "app-bottom-nav",
   templateUrl: "./bottom-nav.html",
   styleUrl: "./bottom-nav.css",
   imports: [
+    NgClass,
+    MenubarModule,
     ToolbarModule,
     ButtonModule,
     AvatarModule,
@@ -23,17 +27,4 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
 })
 export class BottomNav {
   readonly currentNavs = input<MenuItem[]>();
-  readonly view = input.required<View>();
-
-  readonly mobileNavs = computed(() => {
-    const navs = [...(this.currentNavs() || [])];
-    const homeIndex = navs.findIndex((item) => item.label === NavItems.Home);
-
-    if (homeIndex !== -1) {
-      const homeItem = navs.splice(homeIndex, 1)[0];
-      navs.splice(2, 0, homeItem);
-    }
-
-    return navs;
-  });
 }
