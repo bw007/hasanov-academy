@@ -43,19 +43,31 @@
         />
         @if (currentView() === view.Desktop) {
           @if (profileNav()) {
-          <div class="card flex justify-center">
-            <p-menu
-              #menu
-              [model]="secondaryNavs()"
-              styleClass="capitalize text-sm"
-              [popup]="true"
-            />
-            <p-avatar
-              (click)="menu.toggle($event)"
-              [label]="userName().slice(0, 1)"
-              class="cursor-pointer hover:opacity-85 active:opacity-100"
-            />
-          </div>
+          <p-speeddial
+            ngClass="profile-navs"
+            [model]="secondaryNavs()"
+            direction="down"
+            [transitionDelay]="80"
+          >
+            <ng-template #button let-toggleCallback="toggleCallback">
+              <p-avatar
+                (click)="toggleCallback($event)"
+                [label]="userName().slice(0, 1)"
+                class="cursor-pointer hover:opacity-85 active:opacity-100"
+              />
+            </ng-template>
+            <ng-template #item let-item let-toggleCallback="toggleCallback">
+              <a
+                [routerLink]="item.routerLink"
+                class="flex items-center hover:bg-[var(--p-menubar-item-active-background)] rounded transition-colors duration-200 gap-2 py-1.5 px-3 cursor-pointer text-sm"
+                (click)="toggleCallback($event, item)"
+                [ngClass]="item.styleClass"
+              >
+                <span [class]="item.icon"></span>
+                <span>{{ item.label }}</span>
+              </a>
+            </ng-template>
+          </p-speeddial>
           } @else {
           <p-button
             severity="warn"
