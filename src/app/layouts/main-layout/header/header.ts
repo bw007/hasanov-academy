@@ -8,10 +8,10 @@ import { NavType, View } from "@core/enums";
 import { Theme } from "@core/services/layout";
 
 import { MenubarModule } from "primeng/menubar";
-import { MenuModule } from "primeng/menu";
 import { ButtonModule } from "primeng/button";
 import { AvatarModule } from "primeng/avatar";
 import { BadgeModule } from 'primeng/badge';
+import { SpeedDialModule } from 'primeng/speeddial';
 
 @Component({
   selector: "app-header",
@@ -22,9 +22,9 @@ import { BadgeModule } from 'primeng/badge';
     MenubarModule,
     ButtonModule,
     RouterLink,
-    MenuModule,
     AvatarModule,
-    BadgeModule
+    BadgeModule,
+    SpeedDialModule
   ],
   encapsulation: ViewEncapsulation.None
 })
@@ -32,7 +32,7 @@ export class Header {
   protected readonly theme = inject(Theme);
 
   readonly primaryNavs = input<MenuItem[]>();
-  readonly secondaryNavs = input<NavItem[]>();
+  readonly secondaryNavs = input.required<NavItem[]>();
   readonly currentView = input.required<View>();
   protected readonly view = View;
 
