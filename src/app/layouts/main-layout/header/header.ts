@@ -2,8 +2,10 @@ import { Component, computed, inject, input, signal, ViewEncapsulation } from "@
 import { NgClass } from "@angular/common";
 import { RouterLink } from "@angular/router";
 
+import { Auth } from "@core/services/api";
 import { type MenuItem } from "primeng/api";
-import { type NavItem } from "@core/services/layout/navigation";
+import { type NavItem } from "@core/constants/navigation-items";
+
 import { NavType, View } from "@core/enums";
 import { Theme } from "@core/services/layout";
 
@@ -30,6 +32,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
 })
 export class Header {
   protected readonly theme = inject(Theme);
+  private auth = inject(Auth);
 
   readonly primaryNavs = input<MenuItem[]>();
   readonly secondaryNavs = input.required<NavItem[]>();
@@ -38,7 +41,8 @@ export class Header {
 
   readonly scrollDown = input.required<boolean>();
 
-  userName = signal("Hasanov");
+  userName = computed(() => this.auth.user()?.name);
+  avatar = computed(() => this.auth.user()?.avatar);
 
   profileNav = computed(() =>
     this.secondaryNavs()?.find((nav) => nav.type === NavType.Profile)
