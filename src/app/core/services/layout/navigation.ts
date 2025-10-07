@@ -1,82 +1,43 @@
-import { computed, Injectable, signal } from "@angular/core";
-import { NavigationCategory, NavType } from "@core/enums";
-import { type MenuItem, PrimeIcons } from "primeng/api";
+import { computed, inject, Injectable } from "@angular/core";
 
-export interface NavItem extends MenuItem {
-  type?: NavType,
-  categories?: NavigationCategory[];
-}
+import { NAV_ITEMS_TOKEN } from "@core/constants/navigation-items";
+import { Auth } from "../api";
+import { UserRole } from "@core/models";
+import { NavigationCategory, NavType } from "@core/enums";
 
 @Injectable({ providedIn: "root" })
 export class Navigation {
-  private navItems = signal<NavItem[]>([
-    {
-      label: "Asosiy",
-      type: NavType.Home,
-      icon: PrimeIcons.HOME,
-      routerLink: "/home",
-      styleClass: "nav-home",
-      categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
-    },
-    {
-      label: "Kurslar",
-      type: NavType.Courses,
-      icon: PrimeIcons.TH_LARGE,
-      routerLink: "/courses",
-      categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
-    },
-    {
-      label: "Blog",
-      type: NavType.Blog,
-      icon: PrimeIcons.BOOK,
-      routerLink: "/blog",
-      categories: [NavigationCategory.TopPrimary, NavigationCategory.BottomPrimary],
-    },
-    {
-      label: "Kirish",
-      type: NavType.SignIn,
-      icon: PrimeIcons.SIGN_IN,
-      routerLink: "/auth/sign-in",
-      styleClass: "nav-sign-in",
-      categories: [NavigationCategory.TopSecondary, NavigationCategory.BottomPrimary],
-    },
-    {
-      label: "Kurslarim",
-      type: NavType.MyCourses,
-      icon: PrimeIcons.BOOK,
-      routerLink: "/my-courses",
-      categories: [NavigationCategory.TopSecondary],
-    },
-    {
-      label: "Hisobim",
-      type: NavType.Profile,
-      icon: PrimeIcons.USER,
-      routerLink: "/profile",
-      categories: [NavigationCategory.TopSecondary, NavigationCategory.BottomPrimary],
-    },
-    {
-      label: "Chiqish",
-      type: NavType.SignOut,
-      icon: PrimeIcons.SIGN_OUT,
-      routerLink: "/auth/sign-out",
-      styleClass: "nav-sign-out",
-      categories: [NavigationCategory.TopSecondary],
-    }
-  ]);
+  private auth = inject(Auth);
+  private navItems = inject(NAV_ITEMS_TOKEN);
+  protected readonly userRole = UserRole;
 
-  private isAuthenticated = signal<boolean>(true);
+  private isAuthenticated = computed(() => this.auth.isAuthenticated());
   
   private getFilteredItems(category: NavigationCategory) {
-    const filtered = this.navItems().filter(item => 
+    const filtered = this.navItems.filter(item => 
       item.categories?.includes(category)
     );
     
-    return this.isAuthenticated()
-      ? filtered.filter(item => item.type !== NavType.SignIn)
-      : filtered.filter(item => item.type !== NavType.Profile);
+    const role = this.auth.user()?.role;
+    const isAuth = this.isAuthenticated();
+    
+    return filtered.filter(item => {
+      // Guest
+      if (!isAuth) {
+        return item.type !== NavType.Profile && item.type !== NavType.Control;
+      }
+
+      // Admin
+      if (role === this.userRole.Admin) {
+        return item.type !== NavType.SignIn;
+      }
+
+      // Student
+      return item.type !== NavType.Control && item.type !== NavType.SignIn;
+    });
   };
 
-  getNavItems = this.navItems.asReadonly();
+  readonly getNavItems = this.navItems;
 
   getTopPrimaryItems = computed(() => this.getFilteredItems(NavigationCategory.TopPrimary));
   getTopSecondaryItems = computed(() => this.getFilteredItems(NavigationCategory.TopSecondary));
