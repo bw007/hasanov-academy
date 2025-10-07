@@ -17,6 +17,7 @@ import { MessageService } from "primeng/api";
 
 import { errorMessagesProvider } from "@core/constants/error-messages";
 import { successMessagesProvider } from "@core/constants/success-messages";
+import { navItemsProvider } from "@core/constants/navigation-items";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
       authInterceptor,
       httpErrorInterceptor
     ])),
+    navItemsProvider,
     MessageService,
     errorMessagesProvider,
     successMessagesProvider,
