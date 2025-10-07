@@ -8,7 +8,7 @@ export class Responsive {
 
   private handset$ = this.breakpointObserver.observe([Breakpoints.XSmall]);
   private tablet$ = this.breakpointObserver.observe(['(min-width: 600px) and (max-width: 839.98px)']);
-  private web$ = this.breakpointObserver.observe(['(min-width: 840px) and (max-width: 1279.98px)']);
+  private web$ = this.breakpointObserver.observe(['(min-width: 840px)']);
 
   handset = toSignal(this.handset$, { initialValue: { matches: false, breakpoints: {} } });
   tablet = toSignal(this.tablet$, { initialValue: { matches: false, breakpoints: {} } });
