@@ -51,10 +51,16 @@
           >
             <ng-template #button let-toggleCallback="toggleCallback">
               <p-avatar
+                [style]="{ color: 'white', backgroundColor: 'var(--p-orange-500)' }"
                 (click)="toggleCallback($event)"
-                [label]="userName().slice(0, 1)"
+                shape="circle"
+                [image]="avatar()"
                 class="cursor-pointer hover:opacity-85 active:opacity-100"
-              />
+              >
+                @if (!avatar()?.length) {
+                  <span>{{userName()?.slice(0, 1)}}</span>
+                }
+              </p-avatar>
             </ng-template>
             <ng-template #item let-item let-toggleCallback="toggleCallback">
               <a
