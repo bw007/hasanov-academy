@@ -12,9 +12,9 @@ export const ErrorCode = {
   EMAIL_NOT_VERIFIED: 'EMAIL_NOT_VERIFIED',
   
   // JWT Errors
-  JWT_ACCESS_TOKEN_EXPIRED: 'JWT_ACCESS_TOKEN_EXPIRED',
-  JWT_INVALID_ACCESS_TOKEN: 'JWT_INVALID_ACCESS_TOKEN',
-  JWT_MISSING_TOKEN: 'JWT_MISSING_TOKEN',
+  ACCESS_TOKEN_EXPIRED: 'ACCESS_TOKEN_EXPIRED',
+  INVALID_ACCESS_TOKEN: 'INVALID_ACCESS_TOKEN',
+  MISSING_TOKEN: 'MISSING_TOKEN',
   
   // Common Errors
   INTERNAL_ERROR: 'INTERNAL_ERROR',
@@ -85,17 +85,17 @@ export const ERROR_MESSAGES: Record<ErrorCode, MessageData> = {
   },
   
   // ========== JWT Errors ==========
-  [ErrorCode.JWT_ACCESS_TOKEN_EXPIRED]: {
+  [ErrorCode.ACCESS_TOKEN_EXPIRED]: {
     summary: 'Token muddati o\'tgan',
     message: 'Sessiya muddati tugadi. Qaytadan kiring',
     severity: MessageType.Error
   },
-  [ErrorCode.JWT_INVALID_ACCESS_TOKEN]: {
+  [ErrorCode.INVALID_ACCESS_TOKEN]: {
     summary: 'Token xatosi',
     message: 'Token yaroqsiz. Qaytadan kiring',
     severity: MessageType.Error
   },
-  [ErrorCode.JWT_MISSING_TOKEN]: {
+  [ErrorCode.MISSING_TOKEN]: {
     summary: 'Token yo\'q',
     message: 'Autentifikatsiya tokeni topilmadi',
     severity: MessageType.Error
