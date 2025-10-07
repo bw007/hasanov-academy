@@ -2,7 +2,7 @@ export enum NavType {
   Home,
   Courses,
   Blog,
-  Contact,
+  Control,
   SignIn,
   Profile,
   SignOut,
