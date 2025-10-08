@@ -4,6 +4,12 @@ export enum UserRole {
   Student = 'student',
 }
 
+// Auth type
+export enum AuthType {
+  Email = 'submit',
+  Google = 'click'
+}
+
 // Sign in credentials
 export interface SignInData {
   email: string;
