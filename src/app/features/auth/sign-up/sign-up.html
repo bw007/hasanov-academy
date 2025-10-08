@@ -5,10 +5,10 @@
     (ngSubmit)="signUp($event)"
     ngProjectAs="main"
     action=""
-    class="space-y-6 mt-6 w-lg"
+    class="min-w-2xs sm:min-w-xs md:min-w-lg lg:min-w-xl max-w-xl space-y-5 sm:space-y-6 mt-4 sm:mt-6"
   >
     <div class="flex flex-col gap-y-6">
-      <div class="flex justify-between gap-4">
+      <div class="flex flex-col md:flex-row justify-between gap-4">
         <div class="flex flex-col flex-1 gap-2 relative">
           <label for="name" [class.p-invalid-color]="nameErrors" class="leading-2.5 text-sm font-normal">Ism</label>
           <input
@@ -85,7 +85,7 @@
           }
         </div>
       </div>
-      <div class="flex justify-between gap-4" formGroupName="passwords">
+      <div class="flex flex-col md:flex-row justify-between gap-4" formGroupName="passwords">
         <div class="flex flex-col flex-1 gap-2 relative">
           <label for="password" [class.p-invalid-color]="passwordErrors" class="leading-2.5 text-sm font-normal">Maxfiy kalit</label>
           <p-password
@@ -161,7 +161,7 @@
       [loading]="isLocalLoading()"
     ></button>
   </form>
-  <p-divider class="!my-5">Yoki</p-divider>
+  <p-divider class="!bg-transparent !my-5">Yoki</p-divider>
   <p-button
     variant="outlined"
     severity="warn"

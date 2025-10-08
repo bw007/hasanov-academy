@@ -4,8 +4,7 @@
     [formGroup]="form"
     (ngSubmit)="signIn($event)"
     ngProjectAs="main"
-    action=""
-    class="space-y-5 sm:space-y-6 mt-4 sm:mt-6"
+    class="min-w-2xs sm:min-w-xs md:min-w-sm max-w-sm space-y-5 sm:space-y-6 mt-4 sm:mt-6"
   >
     <div class="flex flex-col gap-2 relative">
       <label for="email" [class.p-invalid-color]="emailErrors" class="leading-2.5 text-sm font-normal">E-pochta</label>
@@ -63,7 +62,7 @@
         <label for="remember" class="leading-1 text-sm font-normal ml-1.5">Eslab qoling</label>
       </div>
       <p class="text-end font-normal text-sm text-gray-600">
-        <a class="ml-0.5 text-blue-400 hover:underline" routerLink="/auth/forgot-password">
+        <a class="ml-0.5 text-blue-400 hover:underline" (click)="forgotPass()" routerLink="/auth/forgot-password">
           Kalitni tiklash
         </a>
       </p>
