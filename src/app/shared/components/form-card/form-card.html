@@ -1,6 +1,10 @@
 <p-card
-  class="min-w-72 sm:min-w-96 md:px-2 py-2 md:py-4"
-  [style]="{ borderRadius: '0.75rem' }"
+  class="md:px-2 py-2 md:py-4"
+  [style]="{ 
+    borderRadius: '0.75rem',
+    backgroundColor: 'var(--bg-elevated)',
+    border: '1px solid var(--border-color)'  
+  }"
 >
   <ng-template #title> 
     <ng-content select="header"></ng-content>
