@@ -1,6 +1,11 @@
 import { Component, computed, DestroyRef, ElementRef, inject, signal, viewChildren } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
+import { finalize } from "rxjs";
+
+import { Auth } from "@core/services/api/auth";
+import { Notification } from "@core/services/common";
+import { AuthType } from "@core/models";
 
 import { DividerModule } from "primeng/divider";
 import { ButtonModule } from "primeng/button";
@@ -9,17 +14,9 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from "primeng/inputtext";
 import { CheckboxModule } from 'primeng/checkbox';
+import { MessageModule } from "primeng/message";
 
 import { FormCard } from "@shared/components";
-import { MessageModule } from "primeng/message";
-import { Auth } from "@core/services/api/auth";
-import { finalize } from "rxjs";
-import { Notification } from "@core/services/common";
-
-enum AuthType {
-  Email = 'submit',
-  Google = 'click'
-}
 
 @Component({
   selector: "app-sign-in",
@@ -40,14 +37,14 @@ enum AuthType {
   ],
 })
 export class SignIn {
-  private router = inject(Router);
   private dsRef = inject(DestroyRef);
   private auth = inject(Auth);
+  private router = inject(Router);
   private notification = inject(Notification);
 
   form = new FormGroup({
     email: new FormControl('', {
-      validators: [Validators.required, Validators.email],
+      validators: [Validators.required, Validators.email, Validators.pattern(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)],
     }),
     password: new FormControl('', {
       validators: [Validators.required, Validators.minLength(8)]
@@ -65,7 +62,7 @@ export class SignIn {
     if (!control.touched || !control.dirty || control.valid) return null;
     
     if (control.hasError('required')) return 'Majburiy maydon';
-    if (control.hasError('email')) return 'Noto\'g\'ri e-pochta shakli';
+    if (control.hasError('email') || control.hasError('pattern')) return 'Noto\'g\'ri e-pochta shakli';
     return null;
   };
 
@@ -93,10 +90,32 @@ export class SignIn {
     }
   }
 
+  forgotPass() {
+    this.notification.info({
+      summary: "Tez orada!",
+      message: "Ungacha kalitni esdan chiqarmang"
+    })
+  }
+
+  private resendOTP() {
+    const email = this.form.value.email!;
+    const subscription = this.auth.resendOTP(email)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['auth/verify-email'], {
+            queryParams: { email }
+          });
+        }
+      });
+
+    this.dsRef.onDestroy(() => subscription.unsubscribe())
+  }
+
   private signInWithEmail() {
     // Form validation
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.form.markAllAsDirty();
       
       const invalidInput = this.formInputs().find(input =>
         input.nativeElement.classList.contains('ng-invalid')
@@ -117,12 +136,20 @@ export class SignIn {
         this.loadingState.set({ loading: false, type: '' });
       })
     ).subscribe({
-      next: () => {
-        this.notification.success({
-          summary: 'Welcome!',
-          message: 'Successfully signed in'
-        });
-        this.router.navigateByUrl('/');
+      next: (response) => {
+        if (response?.code === 'EMAIL_VERIFICATION_REQUIRED') {
+          this.notification.info({
+            summary: 'Shoshilmang!',
+            message: 'E-pochtani tasdiqlash lozim'
+          });
+          this.resendOTP();
+        } else {
+          this.notification.success({
+            summary: 'Welcome!',
+            message: 'Successfully signed in'
+          });
+          this.router.navigateByUrl('/');
+        }
       }
     });
 
@@ -130,9 +157,13 @@ export class SignIn {
   }
 
   private signInWithGoogle() {
-    this.loadingState.set({ loading: true, type: AuthType.Email });
-
+    this.loadingState.set({ loading: true, type: AuthType.Google });
+    this.form.markAsPristine();
     // TODO: Implement Google OAuth
+    this.notification.info({
+      summary: 'Tez orada!',
+      message: 'Yaqin vaqtlar ichida ushbu xizmat qo\'shiladi'
+    });
     setTimeout(() => {
       this.loadingState.set({ loading: false, type: '' });
     }, 1000);
