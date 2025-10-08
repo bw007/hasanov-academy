@@ -10,15 +10,16 @@
     />
     <span class="text-center">E-pochtani tasdiqlash</span>
   </div>
-  
-  <p class="text-[13px] font-normal text-slate-500 my-2 text-center">
-    <span class="font-medium mr-1 text-orange-400">{{ email() }}</span>
-    <span>manziliga tasdiqlash kaliti yuborildi.</span>
-  </p>
-  <app-otp-verification
-    (verifyHandle)="onVerifyOtp($event)"
-    (resendHandle)="onResenCode()"
-    [verified]="otpVerified()"
-    [resend]="isResend()"
-  />
+  <div class="w-2xs sm:w-xs md:min-w-sm max-w-sm">
+    <p class="text-[13px] font-normal text-slate-500 my-2 text-center">
+      <span class="font-medium mr-1 text-orange-400">{{ email() }}</span>
+      <span>manziliga tasdiqlash kaliti yuborildi.</span>
+    </p>
+    <app-otp-verification
+      (verifyHandle)="onVerifyOtp($event)"
+      (resendHandle)="onResenCode()"
+      [verified]="otpVerified()"
+      [resend]="isResend()"
+    />
+  </div>
 </app-form-card>
