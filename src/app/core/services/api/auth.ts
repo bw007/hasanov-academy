@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { tap } from "rxjs";
+import { map, tap } from "rxjs";
 
-import type { AuthResponse, SignInData, SignUpData, User } from "@core/models";
+import type { AuthResponse, SignInData, SignUpData, User, VerifyOTPData } from "@core/models";
 
 @Injectable({ providedIn: "root" })
 export class Auth {
@@ -16,13 +16,13 @@ export class Auth {
   accessToken = this._accessToken.asReadonly();
   user = this._user.asReadonly();
 
-  // Get token in storage
+  // Get token on storage
   constructor() {
     const savedToken = localStorage.getItem("access_token");
     if (savedToken) {
       this._accessToken.set(savedToken);
       this.verifyUser().subscribe({
-        error: () => this.removeUserData() 
+        error: () => this.removeUserData()
       })
     }
   }
@@ -33,8 +33,8 @@ export class Auth {
   };
 
   // Verify email handler
-  verifyEmail(code: string) {
-    return this.http.post<AuthResponse>("auth/verify-email", code).pipe(
+  verifyEmail(fields: VerifyOTPData) {
+    return this.http.post<AuthResponse>("auth/verify-otp", fields).pipe(
       tap({
         next: (res) => {
           this.saveUserData(res.data.accessToken, res.data.user);
@@ -45,30 +45,37 @@ export class Auth {
 
   // Check email handler
   checkEmail(email: string) {
-    return this.http.post("auth/check-email", email);
+    return this.http.get<any>("auth/check-email", {
+      params: { email }
+    }).pipe(map((res) => res.data.isAvailable));
   }
 
   // Sign in handler
   signIn(credentials: SignInData) {
-    return this.http.post<AuthResponse>("auth/signin", credentials).pipe(
+    return this.http.post<AuthResponse | any>("auth/signin", credentials).pipe(
       tap({
         next: (res) => {
           this.saveUserData(res.data.accessToken, res.data.user);
         }
-      })
+      }),
     );
   };
 
   // Verify user handler
   verifyUser() {
-    return this.http.get<User>("auth/verify").pipe(
+    return this.http.get<AuthResponse>("auth/verify").pipe(
       tap({
         next: (res) => {
-          this._user.set(res);
+          this._user.set(res.data.user);
         }
       })
     )
   };
+
+  // Resent OTP code
+  resendOTP(email: string) {
+    return this.http.post<any>("auth/resend-otp", { email });
+  }
 
   // Sign out handler
   signOut() {
