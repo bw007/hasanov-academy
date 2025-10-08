@@ -15,6 +15,12 @@ export interface SignUpData extends SignInData {
   name: string;
 }
 
+// Verify OTP
+export interface VerifyOTPData {
+  email: string,
+  otp: string
+}
+
 // User
 export interface User {
   id: string;
