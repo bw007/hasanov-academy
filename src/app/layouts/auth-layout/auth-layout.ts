@@ -5,7 +5,6 @@ import { CardModule } from 'primeng/card';
 @Component({
   selector: "app-auth-layout",
   templateUrl: "./auth-layout.html",
-  styleUrls: ["./auth-layout.css"],
   imports: [RouterOutlet, CardModule],
 })
 export class AuthLayout {}
