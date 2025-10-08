@@ -93,8 +93,9 @@ body {
 }
 
 /* Input base (PrimeNG) */
+.p-inputtext,
 .custom-input {
-  background-color: var(--bg-base);
+  background-color: var(--bg-base) !important;
   border-color: var(--border-color);
   color: var(--text-primary);
 }
@@ -130,4 +131,8 @@ form .p-message-text {
 }
 .app-dark .p-tabs {
   --p-tabs-tab-active-background: var(--bg-elevated);
+}
+
+.p-divider-content {
+  background-color: var(--bg-elevated) !important;
 }
