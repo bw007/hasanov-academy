@@ -1,31 +1,17 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { map, tap } from "rxjs";
 
-import type { AuthResponse, SignInData, SignUpData, User, VerifyOTPData } from "@core/models";
+import type { ApiResponseT, AuthData, SignInData, SignUpData, User, VerifyOTPData } from "@core/models";
 
 @Injectable({ providedIn: "root" })
 export class Auth {
   private http = inject(HttpClient);
 
-  private _accessToken = signal<string>("");
   private _user = signal<User | null>(null);
 
-  isAuthenticated = computed(() => !!this._accessToken() && !!this._user());
-
-  accessToken = this._accessToken.asReadonly();
+  isAuthenticated = computed(() => !!this._user());
   user = this._user.asReadonly();
-
-  // Get token on storage
-  constructor() {
-    const savedToken = localStorage.getItem("access_token");
-    if (savedToken) {
-      this._accessToken.set(savedToken);
-      this.verifyUser().subscribe({
-        error: () => this.removeUserData()
-      })
-    }
-  }
 
   // Sign up handler
   signUp(credentials: SignUpData) {
@@ -34,10 +20,11 @@ export class Auth {
 
   // Verify email handler
   verifyEmail(fields: VerifyOTPData) {
-    return this.http.post<AuthResponse>("auth/verify-otp", fields).pipe(
+    return this.http.post<ApiResponseT<AuthData>>("auth/verify-otp", fields).pipe(
       tap({
         next: (res) => {
-          this.saveUserData(res.data.accessToken, res.data.user);
+          this.saveToken(res.data.accessToken);
+          this._user.set(res.data.user);
         }
       })
     );
@@ -52,10 +39,11 @@ export class Auth {
 
   // Sign in handler
   signIn(credentials: SignInData) {
-    return this.http.post<AuthResponse | any>("auth/signin", credentials).pipe(
+    return this.http.post<ApiResponseT<AuthData> | any>("auth/signin", credentials).pipe(
       tap({
         next: (res) => {
-          this.saveUserData(res.data.accessToken, res.data.user);
+          this.saveToken(res.data.accessToken);
+          this._user.set(res.data.user);
         }
       }),
     );
@@ -63,7 +51,7 @@ export class Auth {
 
   // Verify user handler
   verifyUser() {
-    return this.http.get<AuthResponse>("auth/verify").pipe(
+    return this.http.get<ApiResponseT<AuthData>>("auth/verify").pipe(
       tap({
         next: (res) => {
           this._user.set(res.data.user);
@@ -82,23 +70,14 @@ export class Auth {
     return this.http.post("auth/sign-out", {}).pipe(
       tap({
         next: () => {
-          this.removeUserData();
+          this._user.set(null);
         }
       })
     )
   }
 
-  // Remove user data
-  private removeUserData() {
-    this._accessToken.set("");
-    localStorage.removeItem("access_token");
-    this._user.set(null);
-  }
-
-  // Save user data
-  private saveUserData(token: string, userData: User) {
-    this._accessToken.set(token);
+  // Save storage
+  saveToken(token: string) {
     localStorage.setItem("access_token", token);
-    this._user.set(userData);
   }
 }
