@@ -37,18 +37,8 @@ export interface User {
   isEmailVerified?: boolean;
 }
 
-// Generic API Response
-export interface ApiResponse<T> {
-  success: boolean;
-  message: string;
-  data: T;
-}
-
 // Auth data
 export interface AuthData {
   user: User;
   accessToken: string;
 }
-
-// Auth response
-export type AuthResponse = ApiResponse<AuthData>;

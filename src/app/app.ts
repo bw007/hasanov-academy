@@ -1,5 +1,6 @@
 import { Component, computed, inject, OnInit } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
+import { Token } from "@core/services/common/token";
 import { Responsive, Theme } from "@core/services/layout";
 import { ToastModule } from 'primeng/toast';
 
@@ -12,6 +13,7 @@ import { ToastModule } from 'primeng/toast';
   imports: [RouterOutlet, ToastModule],
 })
 export class App implements OnInit{
+  private token = inject(Token);
   private theme = inject(Theme);
   protected readonly responsive = inject(Responsive);
 
