@@ -217,7 +217,7 @@ export class SignUp implements OnInit{
     ).subscribe({
       next: () => {
         this.notification.success({
-          summary: 'Qoyilmaqom, siz zo\'rsiz!',
+          summary: 'Ofarin!',
           message: 'E-pochtani tasdiqlang va tizimga kiring.'
         });
         this.router.navigate(['auth/verify-email'], {
