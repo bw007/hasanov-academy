@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { StudentGuard } from "@core/guards";
 import { Home } from "@features/home/home";
 
 export const MAIN_ROUTES: Routes = [
@@ -19,5 +20,32 @@ export const MAIN_ROUTES: Routes = [
         loadComponent: () => import("@features/courses/course-detail/course-detail").then(m => m.CourseDetail)
       }
     ]
+  },
+  {
+    path: 'blog',
+    pathMatch: "full",
+    redirectTo: "/"
+  },
+  {
+    path: "cart",
+    pathMatch: "full",
+    canActivate: [StudentGuard],
+    loadComponent: () => import("@features/cart-view/cart-view").then(m => m.CartView)
+  },
+  {
+    path: "favourites",
+    pathMatch: "full",
+    canActivate: [StudentGuard],
+    loadComponent: () => import("@features/favourites/favourites").then(m => m.Favourites)
+  },
+  {
+    path: 'my-courses',
+    pathMatch: "full",
+    redirectTo: "/"
+  },
+  {
+    path: 'profile',
+    pathMatch: "full",
+    redirectTo: "/"
   },
 ];
