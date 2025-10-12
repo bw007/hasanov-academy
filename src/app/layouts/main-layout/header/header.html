@@ -1,7 +1,7 @@
 <header
-  class="transition-all duration-300"
+  class="transition-all duration-300 z-50"
   [ngClass]="{
-    'fixed top-0 w-full z-50': scrollDown(),
+    'fixed top-0 w-full': scrollDown(),
     '-top-20 md:-top-24': !scrollDown()
   }"
 >
@@ -20,17 +20,36 @@
       }
 
       <div class="flex items-center gap-2">
-        <p-button
-          size="small"
-          variant="text"
-          text
-          icon="pi pi-shopping-cart"
-          severity="secondary"
-          class="flex items-center justify-center relative"
-          aria-label="Tungi mavzu"
-        >
-          <p-badge value="2" severity="danger" class="absolute top-0.5 -right-0.5 scale-75" badgeSize="small" />
-        </p-button>
+        @if (isStudent()) {
+          <p-button
+            size="small"
+            variant="text"
+            routerLink="favourites"
+            text
+            icon="pi pi-heart"
+            severity="secondary"
+            class="flex items-center justify-center relative"
+            aria-label="Tungi mavzu"
+          >
+            @if (favourites()) {
+            <p-badge [value]="favourites()" severity="danger" class="absolute top-0.5 -right-0.5 scale-75" badgeSize="small" />
+            }
+          </p-button>
+          <p-button
+            size="small"
+            variant="text"
+            routerLink="cart"
+            text
+            icon="pi pi-shopping-cart"
+            severity="secondary"
+            class="flex items-center justify-center relative"
+            aria-label="Tungi mavzu"
+          >
+            @if (cart()) {
+            <p-badge [value]="cart()" severity="danger" class="absolute top-0.5 -right-0.5 scale-75" badgeSize="small" />
+            }
+          </p-button>
+        }
         
         <p-button
           size="small"
