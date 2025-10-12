@@ -1,0 +1,17 @@
+<div class="video-container">  
+  <youtube-player
+    [videoId]="youtubeVideoId()"
+    [width]="540"
+    [height]="300"
+    [playerVars]="{
+      autoplay: 0,
+      controls: 1,
+      modestbranding: 1,
+      rel: 0
+    }"
+    (ready)="onReady($event)"
+    (stateChange)="onStateChange($event)"
+  />
+  
+  <p> Video mavjud emas </p>
+</div>
