@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal, ViewEncapsulation } from "@angular/core";
+import { Component, computed, inject, input, ViewEncapsulation } from "@angular/core";
 import { NgClass } from "@angular/common";
 import { RouterLink } from "@angular/router";
 
@@ -41,8 +41,11 @@ export class Header {
 
   readonly scrollDown = input.required<boolean>();
 
+  isStudent = this.auth.isStudent;
   userName = computed(() => this.auth.user()?.name);
   avatar = computed(() => this.auth.user()?.avatar);
+  cart = computed(() => this.auth.user()?.cart?.length || '');
+  favourites = computed(() => this.auth.user()?.favourites?.length || '')
 
   profileNav = computed(() =>
     this.secondaryNavs()?.find((nav) => nav.type === NavType.Profile)
