@@ -8,15 +8,16 @@ export class Token {
   accessToken = this._accessToken.asReadonly();
 
   constructor() {    
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      this.saveToken(token);
+    const accessToken = localStorage.getItem("a_token");
+    
+    if (accessToken) {
+      this.saveToken(accessToken);
       this.auth.verifyUser().subscribe();
     }
   }
 
   saveToken(token: string) {
-    localStorage.setItem("access_token", token);
+    localStorage.setItem("a_token", token);
     this._accessToken.set(token);
   }
 }
