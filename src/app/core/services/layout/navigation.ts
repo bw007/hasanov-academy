@@ -18,17 +18,14 @@ export class Navigation {
       item.categories?.includes(category)
     );
     
-    const role = this.auth.user()?.role;
-    const isAuth = this.isAuthenticated();
-    
     return filtered.filter(item => {
       // Guest
-      if (!isAuth) {
+      if (!this.isAuthenticated()) {
         return item.type !== NavType.Profile && item.type !== NavType.Control;
       }
 
       // Admin
-      if (role === this.userRole.Admin) {
+      if (this.auth.isAdmin()) {
         return item.type !== NavType.SignIn;
       }
 
