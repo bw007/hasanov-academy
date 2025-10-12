@@ -8,39 +8,16 @@
       imageClass="rounded-xl"
       loading="lazy"
     />
-    <div class="flex flex-col justify-between flex-1 gap-3.5">
-      <div class="flex w-full items-center justify-between gap-4">
-        <p class="text-xl font-medium">Umar Sadullayev</p>
-        <div class="flex items-center gap-1">
-          <p-button icon="pi pi-github" [rounded]="true" [text]="true" severity="secondary" />
-          <p-button icon="pi pi-telegram" [rounded]="true" [text]="true" severity="info" />
-          <p-button icon="pi pi-twitter" [rounded]="true" [text]="true" severity="secondary" />
-          <p-button icon="pi pi-instagram" [rounded]="true" [text]="true" severity="warn" />
-          <p-button icon="pi pi-youtube" [rounded]="true" [text]="true" severity="danger" />
-        </div>
-      </div>
-      <div class="flex flex-col gap-1.5 text-sm">
-        <div class="flex items-center gap-1.5 text-xs lg:text-sm">
-          <i class="pi pi-clock text-orange-500"></i>
-          <span>2 Hafta</span>
-        </div>
-        <div class="flex items-center gap-1.5 text-xs lg:text-sm">
-          <i class="pi pi-users text-orange-500"></i>
-          <span>156 Talaba</span>
-        </div>
-        <div class="flex items-center gap-1.5 text-xs lg:text-sm">
-          <i class="pi pi-book text-orange-500"></i>
-          <span>20 Mavzu</span>
-        </div>
+    <div class="flex flex-col md:flex-row justify-between flex-1 gap-3.5">
+      <p class="text-xl font-medium">{{ inctructor()?.name }}</p>
+      <div class="flex items-center gap-1">
+        <p-button icon="pi pi-github" [rounded]="true" [text]="true" severity="secondary" />
+        <p-button icon="pi pi-telegram" [rounded]="true" [text]="true" severity="info" />
+        <p-button icon="pi pi-twitter" [rounded]="true" [text]="true" severity="secondary" />
+        <p-button icon="pi pi-instagram" [rounded]="true" [text]="true" severity="warn" />
+        <p-button icon="pi pi-youtube" [rounded]="true" [text]="true" severity="danger" />
       </div>
     </div>
   </div>
-  <p class="font-normal">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure laudantium
-    eaque at dolorum eveniet maxime, obcaecati nihil atque autem natus. Est odit
-    similique recusandae quidem aliquid deleniti porro eos, facilis aut itaque
-    ab esse nostrum ut culpa corporis unde quis tempora. Laudantium nihil
-    accusamus optio ad debitis voluptas libero id voluptatum, eaque dignissimos
-    fuga nesciunt, commodi sunt voluptatem doloribus quod?
-  </p>
+  <p class="font-normal">{{ inctructor()?.bio }}</p>
 </div>

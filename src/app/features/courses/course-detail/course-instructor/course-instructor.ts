@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, input } from "@angular/core";
+import { InstructorT } from "@core/models";
 import { ButtonModule } from "primeng/button";
 import { ImageModule } from "primeng/image"
 
@@ -10,4 +11,6 @@ import { ImageModule } from "primeng/image"
     ButtonModule
   ]
 })
-export class CourseInstructor {}
+export class CourseInstructor {
+  inctructor = input.required<InstructorT | undefined>()
+}
