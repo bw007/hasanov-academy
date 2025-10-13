@@ -46,6 +46,7 @@ export class Course {
   }
 
   getSelectedCourse(courseId: string) {
+    this._selectedCourse.set(null)
     return this.http.get<ApiResponseT<CourseWithSectionsT>>("public/courses/" + courseId).pipe(
       tap((res => {        
         this._selectedCourse.set({ ...res.data })
