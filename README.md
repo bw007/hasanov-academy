@@ -1,59 +1,116 @@
-# HasanovAcademy
+# 🎓 Hasanov Academy
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.0.
+Online kurslar platformasi.
 
-## Development server
+### ✨ Asosiy xususiyatlar
 
-To start a local development server, run:
+- 🎥 Video darsliklar
+- 📚 Kurslar katalogi va qidiruv tizimi
+- 📱 Responsive dizayn (mobil va desktop)
+- 🔐 Xavfsiz autentifikatsiya va avtorizatsiya
 
+## 🛠️ Texnologiyalar
+
+### Frontend
+- **Angular 20** - asosiy framework
+- **TypeScript** - dasturlash tili
+- **Tailwind CSS** - styling
+- **RxJS** - reactive programming
+- **PrimeNG** - UI komponentlar
+
+### Backend (API)
+- **Node.js + Express** - server
+- **MongoDB** - ma'lumotlar bazasi
+- **JWT** - authentication
+- **Stripe** - to'lovlar
+
+### DevOps
+- **Netlify** - frontend hosting
+- **Railway/Render** - backend hosting
+- **Git/GitHub** - version control
+
+## 🚀 O'rnatish va ishga tushirish
+
+### Talablar
+
+- Node.js 18+ va npm
+- Git
+
+### Lokal ishga tushirish
+
+1. **Repositoriyani clone qiling:**
+```bash
+git clone https://github.com/username/hasanov-academy.git
+cd hasanov-academy
+```
+
+2. **Dependencies o'rnating:**
+```bash
+npm install
+```
+
+3. **Environment o'rnating:**
+
+`src/environments/environment.development.ts` faylini yarating:
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:3000/api'
+};
+```
+
+4. **Development server ishga tushiring:**
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Brauzerda `http://localhost:4200` ochiladi.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Production build
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🌐 Deploy
 
-## Running unit tests
+Loyiha **Netlify** orqali avtomatik deploy qilinadi:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- **Production URL:** https://hasanov-academy.netlify.app
+- Har bir `main` branch'ga push avtomatik deploy qiladi
+- Pull request'lar uchun preview deployments yaratiladi
 
-```bash
-ng test
-```
+## 🤝 Contribution
 
-## Running end-to-end tests
+Pull request'lar qabul qilinadi! Katta o'zgarishlar uchun avval issue oching.
 
-For end-to-end (e2e) testing, run:
+1. Fork qiling
+2. Feature branch yarating (`git checkout -b feature/AmazingFeature`)
+3. Commit qiling (`git commit -m 'Add some AmazingFeature'`)
+4. Push qiling (`git push origin feature/AmazingFeature`)
+5. Pull Request oching
 
-```bash
-ng e2e
-```
+## 👨‍💻 Muallif
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+**Lazizbek Hasanov**
+- GitHub: [@bw007](https://github.com/bw007)
+- Email: me.khasanov02@gmail.com
+- Website: https://hasanov-academy.netlify.app
 
-## Additional Resources
+## 🙏 Minnatdorchilik
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Angular jamoasi
+- Netlify
+- Barcha open-source kontributorlar
+
+---
+
+⭐ Loyiha yoqsa, GitHub'da star qo'yishni unutmang!
+
+##  Kelajak rejalar
+
+-    Backend API dokumentatsiyasi: `https://api.hasanov-academy.com/docs`
+- 👤 Foydalanuvchi profili va progress tracking
+- 💳 To'lov tizimi integratsiyasi
+- 📊 O'qituvchilar uchun statistika dashboard
+- 💬 Savol-javob va izohlar tizimi
