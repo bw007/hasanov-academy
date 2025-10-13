@@ -35,10 +35,14 @@ export interface User {
   role: UserRole;
   avatar?: string;
   isEmailVerified?: boolean;
+  cart?: string[];
+  favourites?: string[],
+  enrolledCourses?: string[]
 }
 
 // Auth data
 export interface AuthData {
   user: User;
   accessToken: string;
+  refreshToken: string
 }

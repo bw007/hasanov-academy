@@ -1,0 +1,1 @@
+export { DurationFormatPipe } from "./duration-format.pipe"

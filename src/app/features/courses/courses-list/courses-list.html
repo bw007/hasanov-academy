@@ -1,14 +1,48 @@
-<div class="lg:container mx-auto flex justify-between gap-6 px-4 sm:px-6">
+<div class="lg:container mx-auto flex justify-between gap-6 mt-6 px-4 sm:px-6">
   <div class="flex-1 flex flex-col gap-6">
-    <div class="flex items-center justify-between gap-6 mb-2">
+    <div class="flex flex-col justify-between gap-2 mb-2">
       <h1 class="text-base sm:text-2xl">Barcha Kurslar</h1>
       <app-search-bar></app-search-bar>
     </div>
-    <div class="flex flex-col gap-7">
-      @for (item of items(); track item.id) {
-      <app-course-card [course]="item" [isLoading]="isLoading()"></app-course-card>
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+      @for (item of allCourses(); track item.id) {
+      <app-course-card [course]="item" [isLoading]="isLoading()" class="relative">
+        <div class="flex gap-2" ngProjectAs="actions">
+          <p-button
+           (onClick)="toggleFavourite(item.id)"
+            plain
+            [disabled]="!isStudent()"
+            class="absolute top-5 right-5"
+            size="small"
+            severity="secondary"
+          >
+            @if (item.favourite) {
+              <i class="pi pi-heart-fill text-orange-500"></i>
+            } @else {
+              <i class="pi pi-heart"></i>
+            }
+          </p-button>
+          @if (!item.enrolled && isStudent()) {
+          <p-button
+            (onClick)="addCart(item.id)"
+            [icon]="!item.inCart ? 'pi pi-cart-plus' : ''"
+            size="small"
+            [label]="item.inCart ? 'Savatda' : ''"
+            plain
+            [severity]="item.inCart ? 'warn' : 'secondary'"
+          />
+          }
+          <p-button
+            [routerLink]="['/courses', item.id]"
+            [label]="item.enrolled ? 'Darsga kirish' : 'Ma\'lumot'"
+            size="small"
+            [severity]="item.enrolled ? 'help' : 'primary'"
+          />
+        </div>
+      </app-course-card>
+      } @empty {
+        Kurs topilmadi...
       }
     </div>
   </div>
-  <app-filter-panel></app-filter-panel>
 </div>

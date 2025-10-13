@@ -145,8 +145,8 @@ export class SignIn {
           this.resendOTP();
         } else {
           this.notification.success({
-            summary: 'Welcome!',
-            message: 'Successfully signed in'
+            summary: 'Muvaffaqiyat!',
+            message: 'Muvaffaqiyatli tizimga kirildi'
           });
           this.router.navigateByUrl('/');
         }

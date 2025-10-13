@@ -1,4 +1,4 @@
-<div class="rounded-2xl bg-elevated border border-color shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+<div class="rounded-2xl max-w-5xl bg-elevated border border-color shadow-sm hover:shadow-md transition-shadow overflow-hidden">
   @if (isLoading()) {
     <div class="bg-base flex justify-between items-start gap-4 p-6">
       <p-skeleton width="150px" height="150px" />
@@ -10,36 +10,34 @@
       </div>
     </div>
   } @else {
-    <div class="flex flex-col md:flex-row overflow-hidden h-auto md:h-48">
+    <div class="flex flex-col sm:flex-row overflow-hidden h-auto md:h-48">
       <div class="w-full md:w-2/5 h-48 md:h-full bg-gradient-to-br from-blue-100 to-purple-100 relative">
         <img alt="Course" class="w-full h-full object-cover object-top" src="course.png" />
         <div class="absolute top-3 left-3 bg-gray-900 text-white px-2 md:px-3 py-1 rounded-full text-xs font-medium">
-          Dizayn
+          {{ courseCategory[course().category] }}
         </div>
       </div>
       
       <div class="flex flex-col justify-between w-full md:w-3/5 p-5">
         <div class="flex flex-col gap-1.5">
-          <p class="text-xs text-secondary mb-1">Umar Sadullayev</p>
+          <p class="text-xs text-secondary mb-1">{{course().instructor.name}}</p>
           <h3 class="font-semibold text-base md:text-lg text-primary leading-tight">
-            Angulardan asoslari: To'liq qo'llanma
+            {{course().title}}
           </h3>
-          <div class="grid grid-cols-2 md:flex md:flex-wrap mt-2 gap-2.5 md:gap-4 text-xs text-secondary mb-3">
-              <span class="flex items-center gap-1">
-                <i class="pi pi-clock text-orange-500"></i>
-                2 Hafta
-              </span>
+          <div class="flex flex-wrap mt-2 gap-4 md:gap-4 text-xs text-secondary mb-3">
+              @if (course().studentsCount) {
               <span class="flex items-center gap-1">
                 <i class="pi pi-users text-orange-500"></i>
-                156 Talaba
+                {{ course().studentsCount }} Talaba
               </span>
+              }
               <span class="flex items-center gap-1">
                 <i class="pi pi-chart-bar text-orange-500"></i>
                 Boshlang'ich
               </span>
               <span class="flex items-center gap-1">
                 <i class="pi pi-play-circle text-orange-500"></i>
-                20 Mavzu
+                {{course().lessonsCount}} Mavzu
               </span>
          
           </div>
@@ -48,11 +46,12 @@
         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0">
           <div>
             <span class="text-xl md:text-2xl font-bold text-green-600">Bepul</span>
-            <span class="text-sm text-muted line-through ml-2">200.000 so'm</span>
+            <span class="text-sm text-muted line-through ml-2">
+              {{ course().price }}
+            </span>
           </div>
           <div class="flex gap-2">
-            <p-button icon="pi pi-heart" [outlined]="true" size="small" severity="secondary" />
-            <p-button [routerLink]="['/courses', course().id]" label="Ma'lumot" size="small" />
+            <ng-content select="actions" />
           </div>
         </div>
       </div>

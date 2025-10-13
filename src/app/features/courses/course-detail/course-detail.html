@@ -1,16 +1,17 @@
 <div class="flex flex-col">
   <!-- Hero section -->
-  <app-course-hero></app-course-hero>
-
+  <app-course-hero
+    (enrollCourse)="onEnrollCourse($event)"
+    [course]="selectedCourse()?.course"
+    [isloading]="isLoading()"
+  />
   <!-- Tabs Navigation -->
-  <div class="course-tabs container mx-auto max-w-3xld">
+  <div class="course-tabs lg:container lg:mx-auto px-4 sm:px-6">
     <p-tabs value="0">
       <p-tablist>
         <p-tab value="0">Ma'lumot</p-tab>
         <p-tab value="1">Mavzular</p-tab>
         <p-tab value="2">Muallif</p-tab>
-        <p-tab value="3">Savollar</p-tab>
-        <p-tab value="4">Sharhlar</p-tab>
       </p-tablist>
       @if (isLoading()) {
       <div class="flex flex-col gap-3 bg-slate-50 dark:bg-surface-800 p-4.5">
@@ -25,23 +26,15 @@
       <p-tabpanels class="!bg-slate-50 dark:!bg-surface-800">
         <!-- Overview -->
         <p-tabpanel value="0">
-          <app-course-overview></app-course-overview>
+          <div>{{ selectedCourse()?.course?.description }}</div>
         </p-tabpanel>
         <!-- Topics -->
         <p-tabpanel value="1">
-          <app-course-topics></app-course-topics>
+          <app-course-topics [topics]="selectedCourse()?.sections || []" />
         </p-tabpanel>
         <!-- Instructor -->
         <p-tabpanel value="2">
-          <app-course-instructor></app-course-instructor>
-        </p-tabpanel>
-        <!-- FAQs -->
-        <p-tabpanel value="3">
-          <app-course-faqs></app-course-faqs>
-        </p-tabpanel>
-        <!-- Reviews -->
-        <p-tabpanel value="4">
-          <app-course-reviews></app-course-reviews>
+          <app-course-instructor [inctructor]="selectedCourse()?.course?.instructor" />
         </p-tabpanel>
       </p-tabpanels>
       }

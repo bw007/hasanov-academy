@@ -1,16 +1,15 @@
-<p-iconfield [style]="{ minWidth: '250px' }">
+<p-iconfield class="sm:!w-1/2 lg:!w-1/3 mx-auto" [style]="{ minWidth: '250px' }">
   <input
     type="text"
     pSize="small"
     [style]="{
-      border: 'none',
-      borderBottom: '1px solid',
-      borderRadius: 0,
       boxShadow: 'none',
-      padding: '5px 0',
       width: '100%'
     }"
+    
+    #searchInput
     pInputText
+    
     placeholder="Qidirish"
   />
   <p-inputicon class="pi pi-search" />

@@ -54,7 +54,7 @@ export class VerifyEmail {
       next: () => {
         this.otpVerified.set(verifyStatus.Success);
         this.notification.success({
-          summary: 'Qoyilmaqom!',
+          summary: 'Ofarin!',
           message: 'Muvaffaqiyatli tizimga kirdingiz.'
         });
         this.router.navigateByUrl('/')

@@ -3,12 +3,15 @@ import {
   HttpInterceptorFn,
   HttpRequest,
 } from "@angular/common/http";
+import { inject } from "@angular/core";
+import { Auth } from "@core/services/api";
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ) => {
-  const accessToken = localStorage.getItem("access_token");
+  const accessToken = localStorage.getItem("a_token");
+  const auth = inject(Auth);
   
   const publicEndpoints = ["signin", "signup", "refresh-token", "verify-email"];
   const isPublicEndpoint = publicEndpoints.some(endpoint => 
@@ -16,6 +19,7 @@ export const authInterceptor: HttpInterceptorFn = (
   );
  
   if (isPublicEndpoint || !accessToken) {
+    auth.removeToken();
     return next(req);
   }
 

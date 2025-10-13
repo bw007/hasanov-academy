@@ -1,213 +1,54 @@
-<div class="bg-white px-2 w-60">
-  
-  <!-- Course Category -->
+<div class="bg-white p-4 w-60">
   <div class="mb-6">
     <h3 class="text-lg font-semibold text-gray-900 mb-3">Turkum</h3>
     <div class="space-y-2">
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Web dasturlash</span>
+      <label *ngFor="let category of categories" class="flex items-center justify-between cursor-pointer">
+        <div class="flex items-center cursor-pointer">
+          <p-checkbox
+            [inputId]="category.name"
+            [value]="category.name" 
+            [(ngModel)]="selectedCategories" 
+            [binary]="false"
+            size="small"
+          />
+          <label [for]="category.name" class="ml-2"> {{ category.name }} </label>
         </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">AKT savodxonligi</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" checked class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Dizayn</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">AI olami</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Game DEV</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Kiberxavfsizlik</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
+        <span class="text-gray-500 text-sm">{{ category.count }}</span>
       </label>
     </div>
   </div>
 
-  <!-- Instructors -->
   <div class="mb-6">
     <h3 class="text-lg font-semibold text-gray-900 mb-3">Mualliflar</h3>
     <div class="space-y-2">
-      <label class="flex items-center justify-between cursor-pointer">
+      <label *ngFor="let instructor of instructors" class="flex items-center justify-between cursor-pointer">
         <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Umar Sadullayev</span>
+          <p-checkbox
+            [inputId]="instructor.name"
+            [value]="instructor.name" 
+            [(ngModel)]="selectedCategories" 
+            [binary]="false"
+            size="small"
+          />
+          <label [for]="instructor.name" class="ml-2"> {{ instructor.name }} </label>
         </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Shaxzod Tursunov</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
+        <span class="text-gray-500 text-sm">{{ instructor.count }}</span>
       </label>
     </div>
   </div>
 
-  <!-- Price -->
   <div class="mb-6">
     <h3 class="text-lg font-semibold text-gray-900 mb-3">Narxlar</h3>
     <div class="space-y-2">
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" checked class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Hammasi</span>
+      <label class="flex items-center justify-between flex-col gap-2 cursor-pointer">
+        <div class="flex justify-between items-center w-full">
+          <span class="text-gray-500 text-sm">{{ rangeValues[0] }}</span>
+          <span class="text-gray-500 text-sm">{{ rangeValues[1] }}</span>
         </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
         <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Bepul</span>
+          <p-slider [(ngModel)]="rangeValues" [range]="true" class="w-56" />
         </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Pullik</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
       </label>
     </div>
   </div>
-
-  <!-- Review -->
-  <div class="mb-6">
-    <h3 class="text-lg font-semibold text-gray-900 mb-3">Sharxlar</h3>
-    <div class="space-y-2">
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <div class="ml-3 flex items-center">
-            <div class="flex text-yellow-400">
-              <span>★★★★★</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-gray-500 text-sm">(1,025)</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" checked class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <div class="ml-3 flex items-center">
-            <div class="flex text-yellow-400">
-              <span>★★★★</span><span class="text-gray-300">★</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-gray-500 text-sm">(1,025)</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <div class="ml-3 flex items-center">
-            <div class="flex text-yellow-400">
-              <span>★★★</span><span class="text-gray-300">★★</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-gray-500 text-sm">(1,025)</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <div class="ml-3 flex items-center">
-            <div class="flex text-yellow-400">
-              <span>★★</span><span class="text-gray-300">★★★</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-gray-500 text-sm">(1,025)</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <div class="ml-3 flex items-center">
-            <div class="flex text-yellow-400">
-              <span>★</span><span class="text-gray-300">★★★★</span>
-            </div>
-          </div>
-        </div>
-        <span class="text-gray-500 text-sm">(1,025)</span>
-      </label>
-    </div>
-  </div>
-
-  <!-- Level -->
-  <div>
-    <h3 class="text-lg font-semibold text-gray-900 mb-3">Daraja</h3>
-    <div class="space-y-2">
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Hammasi</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Boshlang'ich</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" checked class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">O'rta</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-      
-      <label class="flex items-center justify-between cursor-pointer">
-        <div class="flex items-center">
-          <input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-          <span class="ml-3 text-gray-700">Mohir</span>
-        </div>
-        <span class="text-gray-500 text-sm">15</span>
-      </label>
-    </div>
-  </div>
-
 </div>

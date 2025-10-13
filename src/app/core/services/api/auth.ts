@@ -1,16 +1,20 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { map, tap } from "rxjs";
 
-import type { ApiResponseT, AuthData, SignInData, SignUpData, User, VerifyOTPData } from "@core/models";
+import { UserRole, type ApiResponseT, type AuthData, type SignInData, type SignUpData, type User, type VerifyOTPData } from "@core/models";
 
 @Injectable({ providedIn: "root" })
 export class Auth {
   private http = inject(HttpClient);
+  roles = UserRole;
 
   private _user = signal<User | null>(null);
 
   isAuthenticated = computed(() => !!this._user());
+  isAdmin = computed(() => this._user()?.role === this.roles.Admin);
+  isStudent = computed(() => this._user()?.role === this.roles.Student);
+  
   user = this._user.asReadonly();
 
   // Sign up handler
@@ -23,7 +27,7 @@ export class Auth {
     return this.http.post<ApiResponseT<AuthData>>("auth/verify-otp", fields).pipe(
       tap({
         next: (res) => {
-          this.saveToken(res.data.accessToken);
+          this.saveToken(res.data.accessToken, res.data.refreshToken);
           this._user.set(res.data.user);
         }
       })
@@ -42,7 +46,7 @@ export class Auth {
     return this.http.post<ApiResponseT<AuthData> | any>("auth/signin", credentials).pipe(
       tap({
         next: (res) => {
-          this.saveToken(res.data.accessToken);
+          this.saveToken(res.data.accessToken, res.data.refreshToken);
           this._user.set(res.data.user);
         }
       }),
@@ -60,6 +64,16 @@ export class Auth {
     )
   };
 
+  refreshToken(refreshToken: string) {
+    return this.http.post<any>("auth/refresh-token", { refreshToken }).pipe(
+      tap({
+        next: (res) => {
+          this.saveToken(res.data.accessToken, res.data.refreshToken)
+        }
+      })
+    )
+  }
+
   // Resent OTP code
   resendOTP(email: string) {
     return this.http.post<any>("auth/resend-otp", { email });
@@ -67,17 +81,24 @@ export class Auth {
 
   // Sign out handler
   signOut() {
-    return this.http.post("auth/sign-out", {}).pipe(
+    return this.http.post("auth/logout", {}).pipe(
       tap({
         next: () => {
           this._user.set(null);
+          this.removeToken();
         }
       })
     )
   }
 
   // Save storage
-  saveToken(token: string) {
-    localStorage.setItem("access_token", token);
+  saveToken(accessToken: string, refreshToken: string) {
+    localStorage.setItem("r_token", refreshToken);
+    localStorage.setItem("a_token", accessToken);
+  }
+
+  removeToken() {
+    localStorage.removeItem("a_token");
+    localStorage.removeItem("r_token");
   }
 }

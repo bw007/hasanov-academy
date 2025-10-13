@@ -1,37 +1,66 @@
-import { Component, input, OnInit, signal } from "@angular/core";
+import { Component, DestroyRef, inject, input, OnInit, signal } from "@angular/core";
 
 import { ButtonModule } from "primeng/button";
 import { SkeletonModule } from 'primeng/skeleton';
 import { CourseHero } from "./course-hero/course-hero";
 import { TabsModule } from 'primeng/tabs';
-import { CourseOverview } from "./course-overview/course-overview";
 import { CourseTopics } from "./course-topics/course-topics";
 import { CourseInstructor } from "./course-instructor/course-instructor";
-import { CourseFaqs } from "./course-faqs/course-faqs";
-import { CourseReviews } from "./course-reviews/course-reviews";
+
+import { Auth, Course } from "@core/services/api";
+import { delay, tap } from "rxjs";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { Notification } from "@core/services/common";
 
 @Component({
   selector: "app-course-detail",
   templateUrl: "./course-detail.html",
   imports: [
     CourseHero,
-    CourseOverview,
     CourseTopics,
     CourseInstructor,
-    CourseFaqs,
-    CourseReviews,
     ButtonModule,
     TabsModule,
-    SkeletonModule
+    SkeletonModule,
   ]
 })
 export class CourseDetail implements OnInit {
+  private dsRef = inject(DestroyRef);
+  private course = inject(Course);
+  private notification = inject(Notification);
+  private auth = inject(Auth);
+
+  selectedCourse = this.course.selectedCourse;
+  
   id = input.required<string>();
-  isLoading = signal(true);
+  isLoading = signal(false);
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.isLoading.set(false);
-    }, 3000);
+    this.isLoading.set(true);
+    this.course.getSelectedCourse(this.id())
+      .pipe(
+        delay(400),
+        takeUntilDestroyed(this.dsRef)
+      )
+      .subscribe({
+        next: () => {
+          this.isLoading.set(false)
+        }
+      });
+  };
+
+  onEnrollCourse(courseId: string) {
+    this.course.enrollCourse(courseId)
+      .pipe(
+        tap(() => {
+          this.auth.verifyUser().subscribe(); 
+          this.notification.success({
+            summary: "Kursga obuna yoqildi",
+            message: ""
+          });
+        }),
+        takeUntilDestroyed(this.dsRef)
+      )
+      .subscribe();  
   }
 }
