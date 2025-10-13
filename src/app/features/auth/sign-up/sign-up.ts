@@ -220,9 +220,10 @@ export class SignUp implements OnInit{
           summary: 'Ofarin!',
           message: 'E-pochtani tasdiqlang va tizimga kiring.'
         });
-        this.router.navigate(['auth/verify-email'], {
-          queryParams: { email }
-        });
+        this.router.navigateByUrl("auth/sign-in")
+        // this.router.navigate(['auth/verify-email'], {
+        //   queryParams: { email }
+        // });
       }
     });
 
