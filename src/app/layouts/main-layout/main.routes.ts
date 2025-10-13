@@ -24,28 +24,26 @@ export const MAIN_ROUTES: Routes = [
   {
     path: 'blog',
     pathMatch: "full",
-    redirectTo: "/"
+    redirectTo: "home"
   },
   {
     path: "cart",
-    pathMatch: "full",
     canActivate: [StudentGuard],
     loadComponent: () => import("@features/cart-view/cart-view").then(m => m.CartView)
   },
   {
     path: "favourites",
-    pathMatch: "full",
     canActivate: [StudentGuard],
     loadComponent: () => import("@features/favourites/favourites").then(m => m.Favourites)
   },
   {
     path: 'my-courses',
     pathMatch: "full",
-    redirectTo: "/"
+    redirectTo: "home"
   },
   {
     path: 'profile',
     pathMatch: "full",
-    redirectTo: "/"
+    redirectTo: "home"
   },
 ];
