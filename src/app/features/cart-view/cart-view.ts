@@ -4,6 +4,7 @@ import { RouterLink } from "@angular/router";
 import { Auth, Cart } from "@core/services/api";
 import { CourseCardComponent } from "@shared/components/course-card/course-card";
 import { ButtonModule } from "primeng/button";
+import { MessageModule } from "primeng/message";
 import { tap } from "rxjs";
 
 @Component({
@@ -12,7 +13,8 @@ import { tap } from "rxjs";
   imports: [
     CourseCardComponent,
     ButtonModule,
-    RouterLink
+    RouterLink,
+    MessageModule
   ]
 })
 export class CartView implements OnInit {
@@ -26,6 +28,7 @@ export class CartView implements OnInit {
   );
 
   isLoading = this.cart.isLoading;
+  error = this.cart.error;
 
   ngOnInit(): void {
     this.cart.getAllCartData().pipe(takeUntilDestroyed(this.dsRef)).subscribe();

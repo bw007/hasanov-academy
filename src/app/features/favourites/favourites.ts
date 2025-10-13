@@ -4,6 +4,7 @@ import { RouterLink } from "@angular/router";
 import { Auth, Favourite } from "@core/services/api";
 import { CourseCardComponent } from "@shared/components/course-card/course-card";
 import { ButtonModule } from "primeng/button";
+import { MessageModule } from "primeng/message";
 import { tap } from "rxjs";
 
 @Component({
@@ -12,7 +13,8 @@ import { tap } from "rxjs";
   imports: [
     CourseCardComponent,
     ButtonModule,
-    RouterLink
+    RouterLink,
+    MessageModule
   ]
 })
 export class Favourites implements OnInit {
@@ -22,6 +24,7 @@ export class Favourites implements OnInit {
 
   favourites = computed(() => this.favourite.favourites());
   isLoading = this.favourite.isLoading;
+  error = this.favourite.error;
 
   ngOnInit(): void {
     this.favourite.getAllFavourites().pipe(takeUntilDestroyed(this.dsRef)).subscribe();

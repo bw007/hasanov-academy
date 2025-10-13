@@ -1,9 +1,9 @@
-<div class="lg:container mx-auto flex justify-between gap-6 mt-6 px-4 sm:px-6">
+<div class="w-full lg:max-w-5xl xl:max-w-7xl mx-auto flex justify-between gap-6 mt-6 px-4 sm:px-6">
   <div class="flex-1 flex flex-col gap-6">
     <div class="flex flex-col justify-between gap-2 mb-2">
       <h1 class="text-base sm:text-2xl">Sevimlilar</h1>
     </div>
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 relative">
       @for (item of favourites(); track item.id) {
       <app-course-card [course]="item" [isLoading]="isLoading()" class="relative">
         <div class="flex gap-2" ngProjectAs="actions">
@@ -25,12 +25,26 @@
         </div>
       </app-course-card>
       } @empty {
-        <p-button
-          routerLink="/courses"
-          label="Kurslarni ko'rish"
-          size="small"
-          class="mx-auto"
-        />
+        @if(isLoading()) {
+          <div class="absolute w-full h-24 flex justify-center items-center">
+            <i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: var(--p-orange-500)"></i>
+          </div>
+        } @else if(!isLoading() && error()) {
+          <p-message
+            icon="pi pi-times-circle"
+            severity="error"
+            class="!mx-auto !w-full"
+          >
+            {{ error() }}
+          </p-message>
+        } @else {
+          <p-button
+            routerLink="/courses"
+            label="Kurslarni ko'rish"
+            size="small"
+            class="mx-auto"
+          />
+        }
       }
     </div>
   </div>

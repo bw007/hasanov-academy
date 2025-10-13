@@ -1,15 +1,17 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from "@angular/core";
 
+import { Router, RouterLink } from "@angular/router";
 import { tap } from "rxjs";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+
 import { Notification } from "@core/services/common";
 import { Auth, Cart, Course, Favourite } from "@core/services/api";
-import { Router, RouterLink } from "@angular/router";
 
 import { CourseCardComponent } from "@shared/components/course-card/course-card";
 import { SearchBar } from "./search-bar/search-bar";
 import { SkeletonModule } from "primeng/skeleton";
 import { ButtonModule } from "primeng/button";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-courses-list',
@@ -19,7 +21,8 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
     SearchBar,
     SkeletonModule,
     ButtonModule,
-    RouterLink
+    RouterLink,
+    MessageModule
   ]
 })
 export class CoursesList implements OnInit {
@@ -47,6 +50,7 @@ export class CoursesList implements OnInit {
   });
   
   isLoading = this.course.isLoading;
+  error = this.course.error;
 
   ngOnInit(): void {
     this.course.getAllCourses()
