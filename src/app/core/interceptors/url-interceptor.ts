@@ -3,15 +3,14 @@ import {
   HttpInterceptorFn,
   HttpRequest,
 } from "@angular/common/http";
+import { environment } from "environments/environment";
 
 export const urlInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ) => {
-  const baseUrl = "http://localhost:3000/api/v1/";
-
   if (!req.url.startsWith('http')) {
-    const url = `${baseUrl.replace(/\/$/, '')}/${req.url.replace(/^\//, '')}`;
+    const url = `${environment.apiUrl.replace(/\/$/, '')}/${req.url.replace(/^\//, '')}`;
 
     const reqClone = req.clone({ url });
 
