@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
-import { delay, tap } from "rxjs";
+import { catchError, delay, finalize, tap, throwError } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class Cart {
@@ -10,8 +10,10 @@ export class Cart {
   cartData = this._cartData.asReadonly();
 
   isLoading = signal(false);
+  error = signal('');
 
   getAllCartData() {
+    this.error.set("");
     this.isLoading.set(true);
     return this.http.get<any>("cart").pipe(
       tap({
@@ -20,7 +22,11 @@ export class Cart {
         }
       }),
       delay(200),
-      tap(_ => {        
+      catchError((error) => {
+        this.error.set("Xatolik sodir bo'ldi")
+        return throwError(() => error);
+      }),
+      finalize(() => {        
         this.isLoading.set(false);
       })
     )

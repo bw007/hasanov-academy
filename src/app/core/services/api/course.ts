@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
 
-import { delay, tap } from "rxjs";
+import { catchError, delay, finalize, tap, throwError } from "rxjs";
 import { ApiResponseT, CourseDataT, CourseT, CourseWithSectionsT, PaginationT, StudentCourseT } from "@core/models";
 
 @Injectable({ providedIn: 'root' })
@@ -14,6 +14,7 @@ export class Course {
   private _studentSelectedCourse = signal<StudentCourseT | null>(null)
   pagination = signal<PaginationT | null>(null);
   isLoading = signal(false);
+  error = signal('');
 
   allCourses = this._courses.asReadonly();
   myCourses = this._myCourses.asReadonly();
@@ -26,6 +27,7 @@ export class Course {
 
   getAllCourses(search = '') {
     this.isLoading.set(true);
+    this.error.set("");
     return this.http.get<ApiResponseT<CourseDataT>>("public/courses", {
       params: { ...this.paginatorConfig, search }
     }).pipe(
@@ -33,7 +35,11 @@ export class Course {
         this._courses.set([ ...res.data.courses ]);
       })),
       delay(200),
-      tap(_ => {
+      catchError((error) => {
+        this.error.set("Xatolik sodir bo'ldi")
+        return throwError(() => error);
+      }),
+      finalize(() => {
         this.isLoading.set(false);
       })
     )

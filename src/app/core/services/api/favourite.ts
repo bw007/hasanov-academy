@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
-import { delay, map, tap } from "rxjs";
+import { catchError, delay, finalize, map, tap, throwError } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class Favourite {
@@ -10,9 +10,11 @@ export class Favourite {
   favourites = this._favourites.asReadonly();
 
   isLoading = signal(false);
+  error = signal('')
 
   getAllFavourites() {
     this.isLoading.set(true);
+    this.error.set("")
     return this.http.get<any>("favourites").pipe(
       tap({
         next: (res) => {
@@ -20,7 +22,11 @@ export class Favourite {
         }
       }),
       delay(200),
-      tap(_ => {        
+      catchError((error) => {
+        this.error.set("Xatolik sodir bo'ldi")
+        return throwError(() => error);
+      }),
+      finalize(() => {        
         this.isLoading.set(false);
       })
     )
