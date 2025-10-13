@@ -2,13 +2,13 @@
   <div class="absolute top-0 bottom-0 right-0 w-1/2 lg:w-2/5 z-0">
     <div class="w-full h-full">
       <img
-        src="course.png"
+        [src]="course()?.thumbnail"
         alt="Course thumbnail"
         class="w-full h-full object-cover opacity-65 mask-l-from-0%"
       />
     </div>
   </div>
-  <div class="lg:container mx-auto px-4 sm:px-6 py-8 relative z-10">
+  <div class="w-full lg:max-w-5xl xl:max-w-7xl mx-auto px-4 sm:px-6 py-8 relative z-10">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
       <div class="lg:col-span-2">
         <!-- Category and instructor -->
