@@ -22,11 +22,10 @@ Online kurslar platformasi.
 - **Node.js + Express** - server
 - **MongoDB** - ma'lumotlar bazasi
 - **JWT** - authentication
-- **Stripe** - to'lovlar
 
 ### DevOps
 - **Netlify** - frontend hosting
-- **Railway/Render** - backend hosting
+- **Render** - backend hosting
 - **Git/GitHub** - version control
 
 ## 🚀 O'rnatish va ishga tushirish
@@ -40,7 +39,7 @@ Online kurslar platformasi.
 
 1. **Repositoriyani clone qiling:**
 ```bash
-git clone https://github.com/username/hasanov-academy.git
+git clone https://github.com/bw007/hasanov-academy.git
 cd hasanov-academy
 ```
 
@@ -55,7 +54,7 @@ npm install
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api'
+  apiUrl: 'http://localhost:3000/api/v1'
 };
 ```
 
@@ -80,30 +79,12 @@ Loyiha **Netlify** orqali avtomatik deploy qilinadi:
 - Har bir `main` branch'ga push avtomatik deploy qiladi
 - Pull request'lar uchun preview deployments yaratiladi
 
-## 🤝 Contribution
-
-Pull request'lar qabul qilinadi! Katta o'zgarishlar uchun avval issue oching.
-
-1. Fork qiling
-2. Feature branch yarating (`git checkout -b feature/AmazingFeature`)
-3. Commit qiling (`git commit -m 'Add some AmazingFeature'`)
-4. Push qiling (`git push origin feature/AmazingFeature`)
-5. Pull Request oching
-
 ## 👨‍💻 Muallif
 
 **Lazizbek Hasanov**
 - GitHub: [@bw007](https://github.com/bw007)
 - Email: me.khasanov02@gmail.com
 - Website: https://hasanov-academy.netlify.app
-
-## 🙏 Minnatdorchilik
-
-- Angular jamoasi
-- Netlify
-- Barcha open-source kontributorlar
-
----
 
 ⭐ Loyiha yoqsa, GitHub'da star qo'yishni unutmang!
 
