@@ -1,11 +1,11 @@
-import { Component, computed, DestroyRef, inject, OnInit } from "@angular/core";
+import { Component, computed, DestroyRef, inject, linkedSignal, OnInit } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { RouterLink } from "@angular/router";
 import { Auth, Favourite } from "@core/services/api";
 import { CourseCardComponent } from "@shared/components/course-card/course-card";
 import { ButtonModule } from "primeng/button";
 import { MessageModule } from "primeng/message";
-import { tap } from "rxjs";
+import { catchError, tap, throwError } from "rxjs";
 
 @Component({
   selector: 'app-favourites',
@@ -22,7 +22,7 @@ export class Favourites implements OnInit {
   private favourite = inject(Favourite);
   private auth = inject(Auth);
 
-  favourites = computed(() => this.favourite.favourites());
+  favourites = linkedSignal(() => this.favourite.favourites());
   isLoading = this.favourite.isLoading;
   error = this.favourite.error;
 
@@ -31,10 +31,16 @@ export class Favourites implements OnInit {
   }
 
   removeFavourite(id: string) {
+    const prevFavouritetData = this.favourites();
     this.favourite.removeFromFavourites(id)
       .pipe(
         tap(res => {
-          this.auth.verifyUser().pipe(takeUntilDestroyed(this.dsRef)).subscribe()
+          this.auth.verifyUser().pipe(takeUntilDestroyed(this.dsRef)).subscribe();
+          this.favourites.update(oldValues => [ ...oldValues?.filter((item: any) => item?.id !== id) ])
+        }),
+        catchError((err) => {
+          this.favourites.set(prevFavouritetData);
+          return throwError(() => err)
         }),
         takeUntilDestroyed(this.dsRef)
       )

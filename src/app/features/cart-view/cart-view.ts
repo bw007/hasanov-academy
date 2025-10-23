@@ -1,11 +1,11 @@
-import { Component, computed, DestroyRef, inject, OnInit } from "@angular/core";
+import { Component, computed, DestroyRef, inject, linkedSignal, OnInit } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { RouterLink } from "@angular/router";
 import { Auth, Cart } from "@core/services/api";
 import { CourseCardComponent } from "@shared/components/course-card/course-card";
 import { ButtonModule } from "primeng/button";
 import { MessageModule } from "primeng/message";
-import { tap } from "rxjs";
+import { catchError, tap, throwError } from "rxjs";
 
 @Component({
   selector: 'app-cart-view',
@@ -22,7 +22,7 @@ export class CartView implements OnInit {
   private cart = inject(Cart);
   private auth = inject(Auth);
 
-  cartData = computed(() => this.cart.cartData());
+  cartData = linkedSignal(() => this.cart.cartData());
   priceSumm = computed(() => 
     this.cart.cartData()?.reduce((acc: number, item: any) => acc + item.price, 0)
   );
@@ -35,10 +35,16 @@ export class CartView implements OnInit {
   }
 
   removeFromCart(id: string) {
+    const prevCartData = this.cartData();
     this.cart.removeCartItem(id)
       .pipe(
         tap(res => {
-          this.auth.verifyUser().pipe(takeUntilDestroyed(this.dsRef)).subscribe()
+          this.auth.verifyUser().pipe(takeUntilDestroyed(this.dsRef)).subscribe();
+          this.cartData.update(oldValues => [ ...oldValues?.filter((item: any) => item?.id !== id) ])
+        }),
+        catchError((err) => {
+          this.cartData.set(prevCartData);
+          return throwError(() => err)
         }),
         takeUntilDestroyed(this.dsRef)
       )
