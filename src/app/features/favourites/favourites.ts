@@ -32,11 +32,13 @@ export class Favourites implements OnInit {
 
   removeFavourite(id: string) {
     const prevFavouritetData = this.favourites();
+    
+    this.favourites.update(oldValues => [ ...oldValues?.filter((item: any) => item?.id !== id) ]);
+
     this.favourite.removeFromFavourites(id)
       .pipe(
         tap(res => {
           this.auth.verifyUser().pipe(takeUntilDestroyed(this.dsRef)).subscribe();
-          this.favourites.update(oldValues => [ ...oldValues?.filter((item: any) => item?.id !== id) ])
         }),
         catchError((err) => {
           this.favourites.set(prevFavouritetData);

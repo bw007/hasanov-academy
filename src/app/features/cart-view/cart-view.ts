@@ -36,11 +36,13 @@ export class CartView implements OnInit {
 
   removeFromCart(id: string) {
     const prevCartData = this.cartData();
+
+    this.cartData.update(oldValues => [ ...oldValues?.filter((item: any) => item?.id !== id) ]);
+    
     this.cart.removeCartItem(id)
       .pipe(
         tap(res => {
           this.auth.verifyUser().pipe(takeUntilDestroyed(this.dsRef)).subscribe();
-          this.cartData.update(oldValues => [ ...oldValues?.filter((item: any) => item?.id !== id) ])
         }),
         catchError((err) => {
           this.cartData.set(prevCartData);
