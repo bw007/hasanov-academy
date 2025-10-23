@@ -39,10 +39,17 @@ export class Favourite {
   }
 
   removeFromFavourites(courseId: string) {
+    const prevFavouritetData = this._favourites();
+    
+    this._favourites.update(oldValues => [ ...oldValues?.filter((item: any) => item?.id !== courseId) ]);
+
     return this.http.delete("favourites/" + courseId).pipe(
       tap({
-        next: (res) => {
-          this._favourites.update(oldData => [ ...oldData.filter((item: any) => item.id !== courseId) ])
+        // next: (res) => {
+        //   this._favourites.update(oldData => [ ...oldData.filter((item: any) => item.id !== courseId) ])
+        // },
+        error: () => {
+          this._favourites.set(prevFavouritetData);
         }
       })
     )
