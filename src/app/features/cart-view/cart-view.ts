@@ -42,7 +42,7 @@ export class CartView implements OnInit {
     this.cart.removeCartItem(id)
       .pipe(
         tap(res => {
-          this.auth.verifyUser().pipe(delay(500), takeUntilDestroyed(this.dsRef)).subscribe();
+          this.auth.verifyUser().pipe(delay(1000), takeUntilDestroyed(this.dsRef)).subscribe();
         }),
         catchError((err) => {
           this.cartData.set(prevCartData);
