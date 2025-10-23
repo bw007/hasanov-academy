@@ -12,7 +12,7 @@ import { ButtonModule } from "primeng/button";
         label="Kurslarni ko'rish"
         severity="primary"
         size="small"
-        routerLink="course"
+        routerLink="/courses"
       />
     </div>
   `,
