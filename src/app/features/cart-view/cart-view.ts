@@ -5,7 +5,7 @@ import { Auth, Cart } from "@core/services/api";
 import { CourseCardComponent } from "@shared/components/course-card/course-card";
 import { ButtonModule } from "primeng/button";
 import { MessageModule } from "primeng/message";
-import { debounceTime, tap } from "rxjs";
+import { tap, throttleTime } from "rxjs";
 
 @Component({
   selector: 'app-cart-view',
@@ -31,7 +31,7 @@ export class CartView implements OnInit {
   error = this.cart.error;
 
   ngOnInit(): void {
-    this.cart.getAllCartData().pipe(debounceTime(500), takeUntilDestroyed(this.dsRef)).subscribe();
+    this.cart.getAllCartData().pipe(throttleTime(500), takeUntilDestroyed(this.dsRef)).subscribe();
   }
 
   removeFromCart(id: string) {
