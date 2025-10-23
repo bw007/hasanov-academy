@@ -5,7 +5,7 @@ import { Auth, Favourite } from "@core/services/api";
 import { CourseCardComponent } from "@shared/components/course-card/course-card";
 import { ButtonModule } from "primeng/button";
 import { MessageModule } from "primeng/message";
-import { catchError, tap, throwError } from "rxjs";
+import { catchError, delay, tap, throwError } from "rxjs";
 
 @Component({
   selector: 'app-favourites',
@@ -38,7 +38,7 @@ export class Favourites implements OnInit {
     this.favourite.removeFromFavourites(id)
       .pipe(
         tap(res => {
-          this.auth.verifyUser().pipe(takeUntilDestroyed(this.dsRef)).subscribe();
+          this.auth.verifyUser().pipe(delay(500), takeUntilDestroyed(this.dsRef)).subscribe();
         }),
         catchError((err) => {
           this.favourites.set(prevFavouritetData);
