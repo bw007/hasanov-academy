@@ -37,10 +37,17 @@ export class Cart {
   }
 
   removeCartItem(courseId: string) {
+    const prevCartData = this._cartData();
+    
+    this._cartData.update(oldValues => [ ...oldValues?.filter((item: any) => item?.id !== courseId) ]);
+
     return this.http.delete("cart/" + courseId).pipe(
       tap({
-        next: (res) => {
-          this._cartData.update(oldData => [ ...oldData.filter((item: any) => item.id !== courseId) ])
+        // next: (res) => {
+        //   this._cartData.update(oldData => [ ...oldData.filter((item: any) => item.id !== courseId) ])
+        // },
+        error: () => {
+          this._cartData.set(prevCartData);
         }
       })
     )
