@@ -31,7 +31,7 @@ export class CartView implements OnInit {
   error = this.cart.error;
 
   ngOnInit(): void {
-    this.cart.getAllCartData().pipe(throttleTime(500), takeUntilDestroyed(this.dsRef)).subscribe();
+    this.cart.getAllCartData().pipe(takeUntilDestroyed(this.dsRef)).subscribe();
   }
 
   removeFromCart(id: string) {

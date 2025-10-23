@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, linkedSignal, OnInit } from "@angular/core";
+import { Component, DestroyRef, inject, linkedSignal, OnInit } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { RouterLink } from "@angular/router";
 import { Auth, Favourite } from "@core/services/api";
@@ -34,7 +34,7 @@ export class Favourites implements OnInit {
     this.favourite.removeFromFavourites(id)
       .pipe(
         tap(res => {
-          this.auth.verifyUser().pipe(throttleTime(500), takeUntilDestroyed(this.dsRef)).subscribe();
+          this.auth.verifyUser().pipe(takeUntilDestroyed(this.dsRef)).subscribe();
         }),
         takeUntilDestroyed(this.dsRef)
       )
