@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, OnInit, signal } from "@angular/core";
+import { Component, computed, DestroyRef, inject, linkedSignal, OnInit, signal } from "@angular/core";
 
 import { Router, RouterLink } from "@angular/router";
 import { tap } from "rxjs";
@@ -34,15 +34,15 @@ export class CoursesList implements OnInit {
   private router = inject(Router);
   private notification = inject(Notification);
 
-  userCart = signal(this.auth.user()?.cart || []);
-  userFavourites = signal(this.auth.user()?.favourites || []);
-  enrolledCouses = this.auth.user()?.enrolledCourses || [];
+  userCart = linkedSignal(() => this.auth.user()?.cart || []);
+  userFavourites = linkedSignal(() => this.auth.user()?.favourites || []);
+  enrolledCouses = linkedSignal(() => this.auth.user()?.enrolledCourses || []);
   isStudent = this.auth.isStudent;
   
   allCourses = computed(() => {
     return this.course.allCourses().map(item => {
       const inCart = this.userCart().some(id => id === item.id);
-      const enrolled = this.enrolledCouses.some(id => id === item.id);
+      const enrolled = this.enrolledCouses().some(id => id === item.id);
       const favourite = this.userFavourites().some(id => id === item.id);
       
       return { ...item, inCart, enrolled, favourite }
